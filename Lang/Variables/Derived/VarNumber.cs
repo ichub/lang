@@ -8,10 +8,10 @@ namespace Lang
 {
     class VarNumber : Variable<float>
     {
-        public VarNumber(float value)
+        public VarNumber(float value) : 
+            base(value)
         {
             this.Type = VariableType.Number;
-            this.Value = value;
         }
     }
 }

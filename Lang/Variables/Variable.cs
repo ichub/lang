@@ -20,6 +20,11 @@ namespace Lang
     {
         public T Value { get; set; }
 
+        public Variable(T value)
+        {
+            this.Value = value;
+        }
+
         public override string ToString()
         {
             return base.ToString() + " " + this.Value.ToString();
