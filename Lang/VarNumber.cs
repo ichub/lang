@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class Program
+    class VarNumber : Variable<float>
     {
-        static void Main(string[] args)
+        public VarNumber(float value)
         {
+            this.Type = VariableType.Number;
+            this.Value = value;
         }
     }
 }

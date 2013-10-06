@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class Program
+    enum VariableType
     {
-        static void Main(string[] args)
-        {
-        }
+        Number,
+        Function,
     }
 }
