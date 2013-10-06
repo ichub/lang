@@ -9,20 +9,23 @@ namespace Lang
     class Node
     {
         public List<Node> Children { get; private set; }
+        public Node Parent { get; private set; }
         public Variable Value { get; private set; }
         public string Expression { get; private set; }
 
         private bool evaluated;
 
-        public Node(string expression)
+        public Node(string expression, Node parent = null)
         {
             this.Children = new List<Node>();
             this.Expression = expression;
-        }
 
-        private void PopulateChildren()
-        {
-            string bareExpression = this.Expression.Replace(" ", "");
+            string[] variables = LangSpec.FindVariables(expression);
+
+            for (int i = 0; i < variables.Length; i++)
+            {
+                this.Children.Add(new Node(variables[i], this));
+            }
         }
 
         private bool ChildrenEvaluated()
@@ -40,11 +43,6 @@ namespace Lang
 
         private void CheckOperationValidity()
         {
-            if (!this.ChildrenEvaluated())
-            {
-                throw new InvalidOperationException("Can't evaluate a node if all children aren't evaluated");
-            }
-
             VarFunction function = this.Children[0].Value as VarFunction;
 
             if (function == null)
@@ -74,13 +72,29 @@ namespace Lang
 
         public void Evaluate()
         {
-            this.CheckOperationValidity();
+            if (!this.ChildrenEvaluated())
+            {
+                for (int i = 0; i < this.Children.Count; i++)
+                {
+                    this.Children[i].Evaluate();
+                }
+            }
+            else
+            {
+                VarFunction function = (VarFunction)this.Children[0].Value;
 
-            VarFunction function = (VarFunction)this.Children[0].Value;
+                this.Value = function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
 
-            this.Value =  function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
+                this.evaluated = true;
+            }
 
-            this.evaluated = true;
+            if (this.evaluated && this.Parent != null)
+            {
+                if (!this.Parent.evaluated)
+                {
+                    this.Parent.Evaluate();
+                }
+            }
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Lang
     {
         static void Main(string[] args)
         {
-            string[] variables = Lang.LangSpec.FindVariables("((1234),((69, 3), 4))");
         }
     }
 }
