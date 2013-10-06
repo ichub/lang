@@ -10,15 +10,12 @@ namespace LangTest
         [TestMethod]
         public void TestStatementMatching()
         {
-            Regex statement = new Regex(Lang.Script.StatementPattern);
+            string[] variables = Lang.LangSpec.FindVariables("(1,2,3,4)");
 
-            Assert.IsFalse(statement.Match("").Success, "1");
-            Assert.IsFalse(statement.Match("()").Success, "2");
-            Assert.IsFalse(statement.Match("(a s () d f").Success, "3");
-
-            Assert.IsTrue(statement.Match("(asdf(a)").Success, "4");
-            Assert.IsTrue(statement.Match("(a s d f)").Success, "5");
-            Assert.IsTrue(statement.Match("(a s d (a) f").Success, "6");
+            Assert.AreEqual("1", variables[0]);
+            Assert.AreEqual("2", variables[1]);
+            Assert.AreEqual("3", variables[2]);
+            Assert.AreEqual("4", variables[3]);
         }
     }
 }

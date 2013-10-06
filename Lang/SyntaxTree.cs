@@ -22,7 +22,7 @@ namespace Lang
 
         private void PopulateChildren()
         {
-
+            string bareExpression = this.Expression.Replace(" ", "");
         }
 
         private bool ChildrenEvaluated()
@@ -72,13 +72,15 @@ namespace Lang
            
         }
 
-        public Variable Evaluate()
+        public void Evaluate()
         {
             this.CheckOperationValidity();
 
             VarFunction function = (VarFunction)this.Children[0].Value;
 
-            return function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
+            this.Value =  function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
+
+            this.evaluated = true;
         }
     }
 }
