@@ -10,7 +10,7 @@ namespace Lang
     {
         public static IEnumerable<U> Map<T, U>(this IEnumerable<T> collection, Func<T, U> function)
         {
-            List<U> result = new List<U>();
+            List<U> result = new List<U>(collection.Count());
 
             for (int i = 0; i < collection.Count(); i++)
             {
