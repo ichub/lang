@@ -82,12 +82,12 @@ namespace Lang
 
             for (int i = 1; i < this.Children.Count; i++)
             {
-                if (this.Children[i].Value.Type != function.VariableTypes[i])
+                if (this.Children[i].Value.Type != function.ArgTypes[i])
                 {
                     throw new Exception(String.Format(
                         "Parameter number {0} should have been a {1} but it was a {2} in expression {3}", 
                         i, 
-                        function.VariableTypes[i], 
+                        function.ArgTypes[i], 
                         this.Children[i].Value.Type,
                         this.Expression));
                 }
@@ -109,7 +109,7 @@ namespace Lang
             {
                 VarFunction function = (VarFunction)this.Children[0].Value;
 
-                this.Value = function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
+                this.Value = function.Invoke(this.Children.GetRange(1, this.Children.Count - 1));
 
                 this.evaluated = true;
             }

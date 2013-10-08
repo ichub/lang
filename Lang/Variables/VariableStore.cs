@@ -8,7 +8,7 @@ namespace Lang
 {
     public class VariableStore
     {
-        public static VariableStore Default { get; private set; }
+        public static VariableStore Default { get { return new VariableStore(); } }
 
         private Dictionary<string, Variable> variables;
 
@@ -32,10 +32,6 @@ namespace Lang
 
                 this.variables[name] = value;
             }
-        }
-        static VariableStore()
-        {
-            Default = new VariableStore();
         }
 
         private VariableStore()
