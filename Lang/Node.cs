@@ -8,6 +8,7 @@ namespace Lang
 {
     public class Node
     {
+        public VariableStore Variables { get; private set; }
         public List<Node> Children { get; private set; }
         public Node Parent { get; private set; }
         public Variable Value { get; private set; }
@@ -15,28 +16,40 @@ namespace Lang
 
         private bool evaluated;
 
-        public Node(string expression, Node parent = null)
+        public Node(string expression, VariableStore variables, Node parent = null)
         {
+            this.Parent = parent;
+            this.Variables = variables;
             this.Children = new List<Node>();
             this.Expression = expression;
 
-            string[] variables = LangSpec.FindVariables(expression);
+            string[] expressions = LangSpec.FindVariables(expression);
 
 
-            if (variables.Length == 1)
+            if (expressions.Length == 1)
             {
-                Variable literal = LangSpec.GetLiteral(variables[0]);
+                Variable literal = LangSpec.GetLiteral(expressions[0]);
 
                 if (literal != null)
                 {
                     this.Value = literal;
+                    this.evaluated = true;
+                    return;
+                }
+
+                Variable variable = this.Variables[expressions[0]];
+
+                if (variable != null)
+                {
+                    this.Value = variable;
+                    this.evaluated = true;
                     return;
                 }
             }
 
-            for (int i = 0; i < variables.Length; i++)
+            for (int i = 0; i < expressions.Length; i++)
             {
-                this.Children.Add(new Node(variables[i], this));
+                this.Children.Add(new Node(expressions[i], this.Variables, this));
             }
         }
 
@@ -86,28 +99,19 @@ namespace Lang
         {
             if (!this.ChildrenEvaluated())
             {
-                for (int i = 0; i < this.Children.Count; i++)
+                foreach (Node child in this.Children)
                 {
-                    this.Children[i].Evaluate();
+                    child.Evaluate();
                 }
             }
-            else
-            {
-                this.CheckOperationValidity();
 
+            if (!this.evaluated)
+            {
                 VarFunction function = (VarFunction)this.Children[0].Value;
 
                 this.Value = function.Apply(this.Children.GetRange(1, this.Children.Count - 1));
 
                 this.evaluated = true;
-            }
-
-            if (this.evaluated && this.Parent != null)
-            {
-                if (!this.Parent.evaluated)
-                {
-                    this.Parent.Evaluate();
-                }
             }
         }
     }

@@ -13,5 +13,10 @@ namespace Lang
         {
             this.Type = VariableType.Number;
         }
+
+        public static VarNumber operator+(VarNumber first, VarNumber second)
+        {
+            return new VarNumber(first.Value + second.Value);
+        }
     }
 }

@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="LangSpec.cs" />
-    <Compile Include="SyntaxTree.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="Variables\VariableStore.cs" />
     <Compile Include="Variables\Derived\VarFunction.cs" />
     <Compile Include="Variables\VariableType.cs" />
     <Compile Include="Variables\Derived\VarNumber.cs" />

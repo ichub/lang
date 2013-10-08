@@ -9,16 +9,16 @@ namespace Lang
 {
     public class VarFunction : Variable<Func<Variable[], Variable>>
     {
-        public ReadOnlyCollection<VariableType> VariableTypes { get; private set; }
+        public VariableType[] VariableTypes { get; private set; }
         public int AmountOfArgs { get; private set; }
 
-        public VarFunction(Func<Variable[], Variable> value, ReadOnlyCollection<VariableType> variableTypes) :
+        public VarFunction(Func<Variable[], Variable> value, VariableType[] variableTypes) :
             base(value)
         {
             this.Type = VariableType.Function;
 
             this.VariableTypes = variableTypes;
-            this.AmountOfArgs = variableTypes.Count;
+            this.AmountOfArgs = variableTypes.Length;
         }
 
         public Variable Apply(List<Node> parameters)

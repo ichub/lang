@@ -10,7 +10,9 @@ namespace Lang
     {
         static void Main(string[] args)
         {
-            Node node = new Node("(1, 1, 2, (3, 4, (5, 6)))");
+            Script script = new Script("(add, 3, (add, 1, 2))");
+            Console.WriteLine(script.Execute());
+            Console.ReadLine();
         }
     }
 }
