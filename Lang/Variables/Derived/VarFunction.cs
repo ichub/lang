@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class VarFunction : Variable<Func<Variable[], Variable>>
+    public class VarFunction : Variable<Func<Variable[], Variable>>
     {
         public ReadOnlyCollection<VariableType> VariableTypes { get; private set; }
         public int AmountOfArgs { get; private set; }

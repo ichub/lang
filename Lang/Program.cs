@@ -10,6 +10,7 @@ namespace Lang
     {
         static void Main(string[] args)
         {
+            Node node = new Node("(1, 1, 2, (3, 4, (5, 6)))");
         }
     }
 }

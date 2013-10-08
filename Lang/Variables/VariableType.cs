@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    enum VariableType
+    public enum VariableType
     {
         Number,
         Function,

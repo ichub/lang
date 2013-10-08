@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class Variable
+    public class Variable
     {
         public VariableType Type { get; protected set; }
 
@@ -16,7 +16,7 @@ namespace Lang
         }
     }
 
-    class Variable<T> : Variable
+    public class Variable<T> : Variable
     {
         public T Value { get; set; }
 

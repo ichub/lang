@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Lang
@@ -9,17 +10,33 @@ namespace Lang
     public static class LangSpec
     {
         public static char VariableSeparator { get; private set; }
+        public static string NumberLiteralPattern { get; private set; }
+
+        public static Regex NumberLiteral { get; private set; }
 
         static LangSpec()
         {
             VariableSeparator = ',';
+            NumberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
+
+            NumberLiteral = new Regex(NumberLiteralPattern);
+        }
+
+        public static Variable GetLiteral(string script)
+        {
+            string parsed = script.Replace(" ", "");
+
+            if (NumberLiteral.IsMatch(parsed))
+            {
+                return new VarNumber(float.Parse(script));
+            }
+
+            return null; // no literal match found
         }
 
         public static string[] FindVariables(string expression)
         {
             string bareExpression = expression.Replace(" ", "");
-
-            bareExpression = bareExpression.Substring(1, bareExpression.Length - 2);
 
             List<string> variables = new List<string>();
 
@@ -32,16 +49,26 @@ namespace Lang
 
                 if (currentChar == '(')
                 {
+                    if (i == 0)
+                    {
+                        continue; // ignore first parens
+                    }
+
                     parensCount++;
                 }
                 else if (currentChar == ')')
                 {
+                    if (i == bareExpression.Length - 1)
+                    {
+                        continue; // ignore last parens
+                    }
+
                     parensCount--;
                 }
 
                 if (parensCount == 0)
                 {
-                    if (currentChar == ',')
+                    if (currentChar == VariableSeparator)
                     {
                         variables.Add(accumulator);
                         accumulator = "";

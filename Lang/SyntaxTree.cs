@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class Node
+    public class Node
     {
         public List<Node> Children { get; private set; }
         public Node Parent { get; private set; }
@@ -21,6 +21,18 @@ namespace Lang
             this.Expression = expression;
 
             string[] variables = LangSpec.FindVariables(expression);
+
+
+            if (variables.Length == 1)
+            {
+                Variable literal = LangSpec.GetLiteral(variables[0]);
+
+                if (literal != null)
+                {
+                    this.Value = literal;
+                    return;
+                }
+            }
 
             for (int i = 0; i < variables.Length; i++)
             {
@@ -81,6 +93,8 @@ namespace Lang
             }
             else
             {
+                this.CheckOperationValidity();
+
                 VarFunction function = (VarFunction)this.Children[0].Value;
 
                 this.Value = function.Apply(this.Children.GetRange(1, this.Children.Count - 1));

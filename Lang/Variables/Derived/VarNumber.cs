@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    class VarNumber : Variable<float>
+    public class VarNumber : Variable<float>
     {
         public VarNumber(float value) : 
             base(value)

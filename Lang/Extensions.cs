@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    static class Extensions
+    public static class Extensions
     {
         public static IEnumerable<U> Map<T, U>(this IEnumerable<T> collection, Func<T, U> function)
         {
