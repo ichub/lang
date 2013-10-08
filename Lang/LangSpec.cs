@@ -34,11 +34,11 @@ namespace Lang
             return null; // no literal match found
         }
 
-        public static string[] FindVariables(string expression)
+        public static string[] DivideExpressions(string expression)
         {
             string bareExpression = expression.Replace(" ", "");
 
-            List<string> variables = new List<string>();
+            List<string> expressions = new List<string>();
 
             string accumulator = "";
             int parensCount = 0;
@@ -70,7 +70,7 @@ namespace Lang
                 {
                     if (currentChar == VariableSeparator)
                     {
-                        variables.Add(accumulator);
+                        expressions.Add(accumulator);
                         accumulator = "";
                         continue;
                     }
@@ -79,9 +79,9 @@ namespace Lang
                 accumulator += currentChar;
             }
 
-            variables.Add(accumulator);
+            expressions.Add(accumulator);
 
-            return variables.ToArray();
+            return expressions.ToArray();
         }
     }
 }

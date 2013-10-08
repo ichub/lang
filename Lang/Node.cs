@@ -23,7 +23,7 @@ namespace Lang
             this.Children = new List<Node>();
             this.Expression = expression;
 
-            string[] expressions = LangSpec.FindVariables(expression);
+            string[] expressions = LangSpec.DivideExpressions(expression);
 
 
             if (expressions.Length == 1)

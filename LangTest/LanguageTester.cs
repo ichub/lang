@@ -10,7 +10,7 @@ namespace LangTest
         [TestMethod]
         public void TestStatementMatching()
         {
-            string[] variables = Lang.LangSpec.FindVariables("(1,2,3,4)");
+            string[] variables = Lang.LangSpec.DivideExpressions("(1,2,3,4)");
 
             Assert.AreEqual("1", variables[0]);
             Assert.AreEqual("2", variables[1]);
