@@ -10,7 +10,7 @@ namespace Lang
     {
         static void Main(string[] args)
         {
-            Script script = new Script("(add, 3, (add, 1, 2))");
+            Script script = new Script("(subtract, 1, (add, 3, (add, 1, 2)))");
             Console.WriteLine(script.Execute());
             Console.ReadLine();
         }

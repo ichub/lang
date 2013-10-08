@@ -58,9 +58,23 @@ namespace Lang
 
                                 return first + second;
                             },
-                       new[] {VariableType.Number, VariableType.Number}
+                        new[] {VariableType.Number, VariableType.Number}
                     )
                 },
+                {
+                    "subtract",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarNumber first = (VarNumber)vars[0];
+                                VarNumber second = (VarNumber)vars[1];
+
+                                return first - second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                }
             };
         }
     }

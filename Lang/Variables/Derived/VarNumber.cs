@@ -18,5 +18,20 @@ namespace Lang
         {
             return new VarNumber(first.Value + second.Value);
         }
+
+        public static VarNumber operator -(VarNumber first, VarNumber second)
+        {
+            return new VarNumber(first.Value - second.Value);
+        }
+
+        public static VarNumber operator*(VarNumber first, VarNumber second)
+        {
+            return new VarNumber(first.Value * second.Value);
+        }
+
+        public static VarNumber operator /(VarNumber first, VarNumber second)
+        {
+            return new VarNumber(first.Value / second.Value);
+        }
     }
 }
