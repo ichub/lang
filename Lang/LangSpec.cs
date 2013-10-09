@@ -32,7 +32,7 @@ namespace Lang
 
             if (NumberLiteral.IsMatch(parsed))
             {
-                return new VarNumber(float.Parse(parsed));
+                return new VarNumber(double.Parse(parsed));
             }
             else if (BooleanLiteral.IsMatch(parsed))
             {

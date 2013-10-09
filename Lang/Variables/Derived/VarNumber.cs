@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    public class VarNumber : Variable<float>
+    public class VarNumber : Variable<double>
     {
-        public VarNumber(float value) : 
+        public VarNumber(double value) : 
             base(value)
         {
             this.Type = VariableType.Number;

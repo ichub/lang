@@ -154,6 +154,10 @@ namespace Lang
                             },
                         new[] {VariableType.Boolean, VariableType.Any, VariableType.Any}
                     )
+                },
+                {
+                    "PI",
+                    new VarNumber(Math.PI)
                 }
             };
         }
