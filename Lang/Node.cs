@@ -8,7 +8,7 @@ namespace Lang
 {
     public class Node
     {
-        public VariableStore Variables { get; private set; }
+        public SyntaxTree ParentTree { get; private set; }
         public List<Node> Children { get; private set; }
         public Node Parent { get; private set; }
         public Variable Value { get; private set; }
@@ -16,10 +16,10 @@ namespace Lang
 
         private bool evaluated;
 
-        public Node(string expression, VariableStore variables, Node parent = null)
+        public Node(string expression, SyntaxTree parentTree, Node parent = null)
         {
             this.Parent = parent;
-            this.Variables = variables;
+            this.ParentTree = parentTree;
             this.Children = new List<Node>();
             this.Expression = expression;
 
@@ -37,7 +37,7 @@ namespace Lang
                     return;
                 }
 
-                Variable variable = this.Variables[expressions[0]];
+                Variable variable = this.ParentTree.Variables[expressions[0]];
 
                 if (variable != null)
                 {
@@ -49,7 +49,7 @@ namespace Lang
 
             for (int i = 0; i < expressions.Length; i++)
             {
-                this.Children.Add(new Node(expressions[i], this.Variables, this));
+                this.Children.Add(new Node(expressions[i], this.ParentTree, this));
             }
         }
 
@@ -64,35 +64,6 @@ namespace Lang
             }
 
             return true;
-        }
-
-        private void CheckOperationValidity()
-        {
-            VarFunction function = this.Children[0].Value as VarFunction;
-
-            if (function == null)
-            {
-                throw new Exception("First argument has to be a function");
-            }
-
-            if (this.Children.Count - 1 != function.AmountOfArgs)
-            {
-                throw new Exception("Amount of arguments doesn't match function");
-            }
-
-            for (int i = 1; i < this.Children.Count; i++)
-            {
-                if (this.Children[i].Value.Type != function.ArgTypes[i])
-                {
-                    throw new Exception(String.Format(
-                        "Parameter number {0} should have been a {1} but it was a {2} in expression {3}", 
-                        i, 
-                        function.ArgTypes[i], 
-                        this.Children[i].Value.Type,
-                        this.Expression));
-                }
-            }
-           
         }
 
         public void Evaluate()

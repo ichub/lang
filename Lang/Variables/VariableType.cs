@@ -8,6 +8,7 @@ namespace Lang
 {
     public enum VariableType
     {
+        Boolean,
         Number,
         Function,
     }

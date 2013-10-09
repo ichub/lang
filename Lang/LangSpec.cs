@@ -11,15 +11,19 @@ namespace Lang
     {
         public static char VariableSeparator { get; private set; }
         public static string NumberLiteralPattern { get; private set; }
+        public static string BooleanLiteralPattern { get; private set; }
 
         public static Regex NumberLiteral { get; private set; }
+        public static Regex BooleanLiteral { get; private set; }
 
         static LangSpec()
         {
             VariableSeparator = ',';
             NumberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
+            BooleanLiteralPattern = @"(True)|(False)";
 
             NumberLiteral = new Regex(NumberLiteralPattern);
+            BooleanLiteral = new Regex(BooleanLiteralPattern);
         }
 
         public static Variable GetLiteral(string script)
@@ -28,7 +32,11 @@ namespace Lang
 
             if (NumberLiteral.IsMatch(parsed))
             {
-                return new VarNumber(float.Parse(script));
+                return new VarNumber(float.Parse(parsed));
+            }
+            else if (BooleanLiteral.IsMatch(parsed))
+            {
+                return new VarBoolean(bool.Parse(parsed));
             }
 
             return null; // no literal match found
