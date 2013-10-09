@@ -9,34 +9,41 @@ namespace Lang
 {
     public static class LangSpec
     {
-        public static char VariableSeparator { get; private set; }
-        public static string NumberLiteralPattern { get; private set; }
-        public static string BooleanLiteralPattern { get; private set; }
+        private static char variableSeparator;
+        private static string numberLiteralPattern;
+        private static string booleanLiteralPattern;
 
-        public static Regex NumberLiteral { get; private set; }
-        public static Regex BooleanLiteral { get; private set; }
+        private static Regex numberLiteral;
+        private static Regex booleanLiteral;
 
         static LangSpec()
         {
-            VariableSeparator = ',';
-            NumberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
-            BooleanLiteralPattern = @"(True)|(False)";
+            variableSeparator = ',';
+            numberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
+            booleanLiteralPattern = @"(True)|(False)";
 
-            NumberLiteral = new Regex(NumberLiteralPattern);
-            BooleanLiteral = new Regex(BooleanLiteralPattern);
+            numberLiteral = new Regex(numberLiteralPattern);
+            booleanLiteral = new Regex(booleanLiteralPattern);
+        }
+
+        public static string StripWhitespace(string input)
+        {
+            Regex whitespace = new Regex(@"\s");
+
+            return whitespace.Replace(input, "");
         }
 
         public static Variable GetLiteral(string script)
         {
-            string parsed = script.Replace(" ", "");
+            script = StripWhitespace(script);
 
-            if (NumberLiteral.IsMatch(parsed))
+            if (numberLiteral.IsMatch(script))
             {
-                return new VarNumber(double.Parse(parsed));
+                return new VarNumber(double.Parse(script));
             }
-            else if (BooleanLiteral.IsMatch(parsed))
+            else if (booleanLiteral.IsMatch(script))
             {
-                return new VarBoolean(bool.Parse(parsed));
+                return new VarBoolean(bool.Parse(script));
             }
 
             return null; // no literal match found
@@ -44,16 +51,16 @@ namespace Lang
 
         public static string[] DivideExpressions(string expression)
         {
-            string bareExpression = expression.Replace(" ", "");
+            expression = StripWhitespace(expression);
 
             List<string> expressions = new List<string>();
 
             string accumulator = "";
             int parensCount = 0;
 
-            for (int i = 0; i < bareExpression.Length; i++)
+            for (int i = 0; i < expression.Length; i++)
             {
-                char currentChar = bareExpression[i];
+                char currentChar = expression[i];
 
                 if (currentChar == '(')
                 {
@@ -66,7 +73,7 @@ namespace Lang
                 }
                 else if (currentChar == ')')
                 {
-                    if (i == bareExpression.Length - 1)
+                    if (i == expression.Length - 1)
                     {
                         continue; // ignore last parens
                     }
@@ -76,7 +83,7 @@ namespace Lang
 
                 if (parensCount == 0)
                 {
-                    if (currentChar == VariableSeparator)
+                    if (currentChar == variableSeparator)
                     {
                         expressions.Add(accumulator);
                         accumulator = "";
