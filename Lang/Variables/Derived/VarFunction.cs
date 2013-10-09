@@ -25,5 +25,10 @@ namespace Lang
         {
             return this.Value.Invoke(parameters.Map(node => node.Value).ToArray());
         }
+
+        public override string ToString()
+        {
+            return "Function";
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Lang
             string[] expressions = LangSpec.DivideExpressions(expression);
 
 
-            if (expressions.Length == 1)
+            if (expressions.Length == 1 && !LangSpec.IsFunctionInvocation(expression))
             {
                 Variable literal = LangSpec.GetLiteral(expressions[0]);
 

@@ -156,6 +156,17 @@ namespace Lang
                     )
                 },
                 {
+                    "randfloat",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                return new VarNumber(Program.Random.NextDouble());
+                            },
+                        new VariableType[] {}
+                    )
+                },
+                {
                     "PI",
                     new VarNumber(Math.PI)
                 }

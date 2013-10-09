@@ -33,6 +33,13 @@ namespace Lang
             return whitespace.Replace(input, "");
         }
 
+        public static bool IsFunctionInvocation(string input)
+        {
+            input = StripWhitespace(input);
+
+            return input[0] == '(' && input[input.Length - 1] == ')';
+        }
+
         public static Variable GetLiteral(string script)
         {
             script = StripWhitespace(script);

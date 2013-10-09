@@ -8,6 +8,13 @@ namespace Lang
 {
     class Program
     {
+        public static Random Random { get; private set; }
+
+        static Program()
+        {
+            Random = new Random();
+        }
+
         static void Main(string[] args)
         {
             while (true)
