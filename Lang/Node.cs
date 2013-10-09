@@ -22,11 +22,23 @@ namespace Lang
             this.ParentTree = parentTree;
             this.Children = new List<Node>();
             this.Expression = expression;
-
+            
             string[] expressions = LangSpec.DivideExpressions(expression);
 
+            if (ParseSimpleNode(expressions))
+            {
+                return;
+            }
 
-            if (expressions.Length == 1 && !LangSpec.IsFunctionInvocation(expression))
+            for (int i = 0; i < expressions.Length; i++)
+            {
+                this.Children.Add(new Node(expressions[i], this.ParentTree, this));
+            }
+        }
+
+        private bool ParseSimpleNode(string[] expressions)
+        {
+            if (expressions.Length == 1 && !LangSpec.IsFunctionInvocation(expressions[0]))
             {
                 Variable literal = LangSpec.GetLiteral(expressions[0]);
 
@@ -34,7 +46,7 @@ namespace Lang
                 {
                     this.Value = literal;
                     this.evaluated = true;
-                    return;
+                    return true;
                 }
 
                 Variable variable = this.ParentTree.Variables[expressions[0]];
@@ -43,14 +55,11 @@ namespace Lang
                 {
                     this.Value = variable;
                     this.evaluated = true;
-                    return;
+                    return true;
                 }
             }
 
-            for (int i = 0; i < expressions.Length; i++)
-            {
-                this.Children.Add(new Node(expressions[i], this.ParentTree, this));
-            }
+            return false;
         }
 
         private bool ChildrenEvaluated()
