@@ -58,7 +58,7 @@ namespace Lang
                     )
                 },
                 {
-                    "subtract",
+                    "sub",
                     new VarFunction
                     (
                         vars =>
@@ -69,6 +69,90 @@ namespace Lang
                                 return first - second;
                             },
                         new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "mul",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarNumber first = (VarNumber)vars[0];
+                                VarNumber second = (VarNumber)vars[1];
+
+                                return first * second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "div",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarNumber first = (VarNumber)vars[0];
+                                VarNumber second = (VarNumber)vars[1];
+
+                                return first / second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "and",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarBoolean first = (VarBoolean)vars[0];
+                                VarBoolean second = (VarBoolean)vars[1];
+
+                                return first & second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "or",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarBoolean first = (VarBoolean)vars[0];
+                                VarBoolean second = (VarBoolean)vars[1];
+
+                                return first | second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "xor",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarBoolean first = (VarBoolean)vars[0];
+                                VarBoolean second = (VarBoolean)vars[1];
+
+                                return first ^ second;
+                            },
+                        new[] {VariableType.Number, VariableType.Number}
+                    )
+                },
+                {
+                    "ifthen",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarBoolean decider = (VarBoolean)vars[0];
+
+                                return decider.Value ? vars[1] : vars[2];
+                                
+                            },
+                        new[] {VariableType.Boolean, VariableType.Any, VariableType.Any}
                     )
                 }
             };

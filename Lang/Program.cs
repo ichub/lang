@@ -10,9 +10,18 @@ namespace Lang
     {
         static void Main(string[] args)
         {
-            SyntaxTree script = new SyntaxTree("True");
-            Console.WriteLine(script.Evaluate());
-            Console.ReadLine();
+            while (true)
+            {
+                Console.Write("> ");
+
+                string script = Console.ReadLine();
+
+                SyntaxTree tree = new SyntaxTree(script);
+
+                Console.Write("> ");
+                Console.WriteLine(tree.Evaluate());
+                Console.WriteLine();
+            }
         }
     }
 }
