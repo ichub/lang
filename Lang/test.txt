@@ -1,2 +1,1 @@
-(print, 123123);
-(print, 1321);
+(print, "asdf");

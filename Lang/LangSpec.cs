@@ -13,9 +13,11 @@ namespace Lang
         private static char expressionSeparator;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
+        private static string stringLiteralPattern;
 
         private static Regex numberLiteral;
         private static Regex booleanLiteral;
+        private static Regex stringLiteral;
         private static Regex whiteSpace;
 
         static LangSpec()
@@ -24,9 +26,12 @@ namespace Lang
             variableSeparator = ',';
             numberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
             booleanLiteralPattern = @"(True)|(False)";
+            stringLiteralPattern = "\".*\"";
 
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
+            stringLiteral = new Regex(stringLiteralPattern);
+
             whiteSpace = new Regex(@"\s+");
         }
 
@@ -55,6 +60,10 @@ namespace Lang
             else if (booleanLiteral.IsMatch(script))
             {
                 return new VarBoolean(bool.Parse(script));
+            }
+            else if (stringLiteral.IsMatch(script))
+            {
+                return new VarString(script);
             }
 
             return null; // no literal match found

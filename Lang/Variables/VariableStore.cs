@@ -52,9 +52,9 @@ namespace Lang
                                 Variable var = vars[0];
 
                                 Console.WriteLine(var);
-                                return null;
+                                return var;
                             },
-                        new[] {VariableType.Any}
+                        new[] {VariableType.Any, VariableType.Any}
                     )
                 },
                 { 
