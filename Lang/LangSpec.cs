@@ -63,7 +63,7 @@ namespace Lang
             }
             else if (stringLiteral.IsMatch(script))
             {
-                return new VarString(script);
+                return new VarString(script.Substring(1, script.Length - 2));
             }
 
             return null; // no literal match found
@@ -119,20 +119,11 @@ namespace Lang
             return expressions.ToArray();
         }
 
-        public static List<Expression> GetExpressions(Script context, string script)
+        public static string[] GetExpressions(Script context, string script)
         {
             script = whiteSpace.Replace(script, "");
 
-            string[] expressionLiterals = script.Split(expressionSeparator).Where(a => a != "").ToArray();
-
-            List<Expression> expressions = new List<Expression>(expressionLiterals.Length);
-
-            for (int i = 0; i < expressionLiterals.Length; i++)
-            {
-                expressions.Add(new Expression(context, expressionLiterals[i]));
-            }
-
-            return expressions;
+            return script.Split(expressionSeparator).Where(a => a != "").ToArray();
         }
     }
 }

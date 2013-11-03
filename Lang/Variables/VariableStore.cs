@@ -44,6 +44,32 @@ namespace Lang
             this.variables = new Dictionary<string, Variable>
             {
                 { 
+                    "assign", 
+                    new VarFunction
+                    (
+                        vars => 
+                            {
+                                VarString name = (VarString)vars[0];
+
+                                this[name.Value] = vars[1];
+
+                                return vars[1];
+                            },
+                        new[] {VariableType.String, VariableType.Any}
+                    )
+                },
+                { 
+                    "return", 
+                    new VarFunction
+                    (
+                        vars => 
+                            {
+                                return vars[0];
+                            },
+                        new[] {VariableType.Any}
+                    )
+                },
+                { 
                     "print", 
                     new VarFunction
                     (
@@ -54,7 +80,7 @@ namespace Lang
                                 Console.WriteLine(var);
                                 return var;
                             },
-                        new[] {VariableType.Any, VariableType.Any}
+                        new[] {VariableType.Any}
                     )
                 },
                 { 
