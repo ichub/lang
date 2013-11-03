@@ -13,7 +13,7 @@ In Lang, there are 4 types:
 * functions
 * booleans
 
-Every single variable is one of those types; there is no null.
+Every single variable is one of those types; there is no null. Lang is a statically typed language.
 
 A script consists of expressions, separated by semicolons.
 
@@ -49,9 +49,18 @@ Branching can be achieved using the `ifthen` function. If the first parameter is
 
 The expression above would return `1`.
 
-A Lang script always returns a value - the value of the last expression evaluated. For this purpose, the `return` function can be used. The return function is just an identity function, which returns any value which it is given. The following script would return `3`:
+A Lang script always returns a value - the value of the last expression evaluated. For this purpose, the `return` function can be used. The `return` function is just an identity function, which returns any value which it is given. The following script would return `3`:
 
 ```
+  (assign, "one", 1);
+  (assign, "two", 2);
+  (assign, "sum", (add, one, two));
+  (return, sum);
+```
+
+Note that the `return` function does not actually stop execution. The following would still return `3`:
+```
+  (return 0);
   (assign, "one", 1);
   (assign, "two", 2);
   (assign, "sum", (add, one, two));
