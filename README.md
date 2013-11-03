@@ -66,3 +66,11 @@ Note that the `return` function does not actually stop execution. The following 
   (assign, "sum", (add, one, two));
   (return, sum);
 ```
+
+Todo
+----
+* Implement function literals, so that new functions can be defined in a script
+* Check script for validity before running it to prevent crashes
+* Add escape sequences to strings
+* Check for validity of variable names before assigning to them
+* Add loops
