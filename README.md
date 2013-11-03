@@ -2,7 +2,7 @@ Lang
 ====
 
 A simple interpreted language written in C#
-Lang is a functional programming language, created for fun. It is just an experiment
+Lang is a functional programming language, created for fun. It is just an experiment.
 
 Specification
 -------------
@@ -15,7 +15,7 @@ In Lang, there are 4 types:
 
 Every single variable is one of those types; there is no null.
 
-A program consists of expressions, separated by semicolons. The value that a program returns is the value to which the final statement is evaluated. Expressions take the following form:
+A script consists of expressions, separated by semicolons.
 
 ```
   (add, 2, 3);
@@ -27,19 +27,24 @@ All expressions are sorrounded by parenthesis, and all expressions return values
 Expressions can be nested:
 
 ```
-  (add, 2, (add, 3, 4));
+  (add, 2, (add, 3, (mul, 3, 5)));
 ```
 
-New variables can be defined using the `assign` function. Valid names consist only of ([a-z]|[A-Z])+
+New variables can be defined using the `assign` function. Valid names consist only of `([a-z]|[A-Z])+`.
 
 ```
   (assign, "one", 1);
 ```
 
+You can print the value of a variable by using the `print` function:
+
+```
+  (print, False);
+```
 Branching can be achieved using the `ifthen` function. If the first parameter is true, then the second is returned, otherwise the 3rd is returned.
 
 ```
-  (ifthen, true, 1, 2)
+  (ifthen, true, 1, 2);
 ```
 
 The expression above would return `1`.
@@ -52,4 +57,3 @@ A Lang script always returns a value - the value of the last expression evaluate
   (assign, "sum", (add, one, two));
   (return, sum);
 ```
-
