@@ -8,7 +8,7 @@ namespace Lang
 {
     public class Node
     {
-        public SyntaxTree ParentTree { get; private set; }
+        public Expression ParentTree { get; private set; }
         public List<Node> Children { get; private set; }
         public Node Parent { get; private set; }
         public Variable Value { get; private set; }
@@ -16,7 +16,7 @@ namespace Lang
 
         private bool evaluated;
 
-        public Node(string expression, SyntaxTree parentTree, Node parent = null)
+        public Node(string expression, Expression parentTree, Node parent = null)
         {
             this.Parent = parent;
             this.ParentTree = parentTree;

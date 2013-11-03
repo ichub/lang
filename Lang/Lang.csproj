@@ -44,7 +44,8 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="LangSpec.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="SyntaxTree.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="Script.cs" />
     <Compile Include="Variables\Derived\VarBoolean.cs" />
     <Compile Include="Variables\VariableStore.cs" />
     <Compile Include="Variables\Derived\VarFunction.cs" />

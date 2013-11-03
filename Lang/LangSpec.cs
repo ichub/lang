@@ -10,20 +10,24 @@ namespace Lang
     public static class LangSpec
     {
         private static char variableSeparator;
+        private static char expressionSeparator;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
 
         private static Regex numberLiteral;
         private static Regex booleanLiteral;
+        private static Regex whiteSpace;
 
         static LangSpec()
         {
+            expressionSeparator = ';';
             variableSeparator = ',';
             numberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
             booleanLiteralPattern = @"(True)|(False)";
 
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
+            whiteSpace = new Regex(@"\s+");
         }
 
         public static string StripWhitespace(string input)
@@ -104,6 +108,22 @@ namespace Lang
             expressions.Add(accumulator);
 
             return expressions.ToArray();
+        }
+
+        public static List<Expression> GetExpressions(Script context, string script)
+        {
+            script = whiteSpace.Replace(script, "");
+
+            string[] expressionLiterals = script.Split(expressionSeparator).Where(a => a != "").ToArray();
+
+            List<Expression> expressions = new List<Expression>(expressionLiterals.Length);
+
+            for (int i = 0; i < expressionLiterals.Length; i++)
+            {
+                expressions.Add(new Expression(context, expressionLiterals[i]));
+            }
+
+            return expressions;
         }
     }
 }

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    public class SyntaxTree
+    public class Expression
     {
         public VariableStore Variables { get; private set; }
 
         private Node topNode;
 
-        public SyntaxTree(string script)
+        public Expression(Script parentScript, string expression)
         {
-            this.Variables = VariableStore.Default;
+            this.Variables = parentScript.Variables;
 
-            this.topNode = new Node(script, this);
+            this.topNode = new Node(expression, this);
         }
 
         public Variable Evaluate()
