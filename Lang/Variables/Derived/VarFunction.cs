@@ -23,7 +23,7 @@ namespace Lang
 
         public Variable Invoke(List<Node> parameters)
         {
-            return this.Value.Invoke(parameters.Map(node => node.Value).ToArray());
+            return this.Value.Invoke(parameters.Select(node => node.Value).ToArray());
         }
 
         public override string ToString()
