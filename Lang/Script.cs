@@ -10,26 +10,27 @@ namespace Lang
     {
         public VariableStore Variables { get; private set; }
 
+        private List<Expression> expressions;
+
         private string script;
 
         public Script(string script)
         {
             this.Variables = VariableStore.Default;
-
             this.script = script;
+
+            string[] expressionLiterals = LangSpec.GetExpressions(this.script);
+
+            this.expressions = expressionLiterals.Select(lit => new Expression(this, lit)).ToList();
         }
 
         public Variable Evaluate()
         {
-            string[] expressionLiterals = LangSpec.GetExpressions(this.script);
-
-            for (int i = 0; i < expressionLiterals.Length; i++)
+            for (int i = 0; i < this.expressions.Count; i++)
             {
-                Expression expression = new Expression(this, expressionLiterals[i]);
+                Variable result = expressions[i].Evaluate();
 
-                Variable result = expression.Evaluate();
-
-                if (i == expressionLiterals.Length - 1)
+                if (i == expressions.Count - 1)
                 {
                     return result;
                 }
