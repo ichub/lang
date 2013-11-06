@@ -47,8 +47,10 @@
     <Compile Include="Node\Node.cs" />
     <Compile Include="Node\LiteralNode.cs" />
     <Compile Include="Node\VariableNode.cs" />
-    <Compile Include="SyntaxTree.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="Script.cs" />
     <Compile Include="Variables\Derived\VarBoolean.cs" />
+    <Compile Include="Variables\Derived\VarString.cs" />
     <Compile Include="Variables\VariableStore.cs" />
     <Compile Include="Variables\Derived\VarFunction.cs" />
     <Compile Include="Variables\VariableType.cs" />
@@ -56,6 +58,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables\Variable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

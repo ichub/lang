@@ -12,5 +12,6 @@ namespace Lang
         Boolean,
         Number,
         Function,
+        String,
     }
 }

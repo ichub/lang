@@ -23,7 +23,7 @@ namespace Lang
 
                 return null;
             }
-            set 
+            set
             {
                 if (!this.variables.ContainsKey(name))
                 {
@@ -43,6 +43,46 @@ namespace Lang
         {
             this.variables = new Dictionary<string, Variable>
             {
+                { 
+                    "assign", 
+                    new VarFunction
+                    (
+                        vars => 
+                            {
+                                VarString name = (VarString)vars[0];
+
+                                this[name.Value] = vars[1];
+
+                                return vars[1];
+                            },
+                        new[] {VariableType.String, VariableType.Any}
+                    )
+                },
+                { 
+                    "return", 
+                    new VarFunction
+                    (
+                        vars => 
+                            {
+                                return vars[0];
+                            },
+                        new[] {VariableType.Any}
+                    )
+                },
+                { 
+                    "print", 
+                    new VarFunction
+                    (
+                        vars => 
+                            {
+                                Variable var = vars[0];
+
+                                Console.WriteLine(var);
+                                return var;
+                            },
+                        new[] {VariableType.Any}
+                    )
+                },
                 { 
                     "add", 
                     new VarFunction

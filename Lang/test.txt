@@ -1,0 +1,2 @@
+(assign, "one", 1);
+(return, one);

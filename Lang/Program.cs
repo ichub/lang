@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,12 +33,20 @@ namespace Lang
 
             while (true)
             {
-                string script = Console.ReadLine();
+                string scriptPath = Console.ReadLine();
 
-                SyntaxTree tree = new SyntaxTree(script);
-                Variable var = tree.Evaluate();
+                Script sc = new Script(ReadFile(scriptPath));
 
-                Console.WriteLine(var);
+                Console.WriteLine();
+                Console.WriteLine(sc.Evaluate());
+            }
+        }
+
+        static string ReadFile(string path)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                return sr.ReadToEnd();
             }
         }
     }
