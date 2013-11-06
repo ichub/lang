@@ -16,7 +16,7 @@ namespace Lang
         {
             this.Variables = VariableStore.Default;
 
-            this.topNode = new Node(script, this);
+            this.topNode = Node.Create(this, null, script);
         }
 
         public Variable Evaluate()

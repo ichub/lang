@@ -17,17 +17,27 @@ namespace Lang
 
         static void Main(string[] args)
         {
+            //while (true)
+            //{
+            //    Console.Write("> ");
+
+            //    string script = Console.ReadLine();
+
+            //    SyntaxTree tree = new SyntaxTree(script);
+
+            //    Console.Write("> ");
+            //    Console.WriteLine(tree.Evaluate());
+            //    Console.WriteLine();
+            //}
+
             while (true)
             {
-                Console.Write("> ");
-
                 string script = Console.ReadLine();
 
                 SyntaxTree tree = new SyntaxTree(script);
+                Variable var = tree.Evaluate();
 
-                Console.Write("> ");
-                Console.WriteLine(tree.Evaluate());
-                Console.WriteLine();
+                Console.WriteLine(var);
             }
         }
     }

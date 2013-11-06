@@ -12,18 +12,22 @@ namespace Lang
         private static char variableSeparator;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
+        private static string variablePattern;
 
         private static Regex numberLiteral;
         private static Regex booleanLiteral;
+        private static Regex variable;
 
         static LangSpec()
         {
             variableSeparator = ',';
-            numberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
-            booleanLiteralPattern = @"(True)|(False)";
+            numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
+            booleanLiteralPattern = @"^(True)|(False)$";
+            variablePattern = @"^([a-z]|[A-Z])+$";
 
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
+            variable = new Regex(variablePattern);
         }
 
         public static string StripWhitespace(string input)
@@ -40,6 +44,15 @@ namespace Lang
             return input[0] == '(' && input[input.Length - 1] == ')';
         }
 
+        public static bool IsLiteral(string script)
+        {
+            return GetLiteral(script) != null;
+        }
+
+        public static bool IsVariable(string input)
+        {
+            return variable.IsMatch(input);
+        }
         public static Variable GetLiteral(string script)
         {
             script = StripWhitespace(script);

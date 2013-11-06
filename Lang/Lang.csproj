@@ -43,7 +43,10 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="LangSpec.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="Node\ComplexNode.cs" />
+    <Compile Include="Node\Node.cs" />
+    <Compile Include="Node\LiteralNode.cs" />
+    <Compile Include="Node\VariableNode.cs" />
     <Compile Include="SyntaxTree.cs" />
     <Compile Include="Variables\Derived\VarBoolean.cs" />
     <Compile Include="Variables\VariableStore.cs" />
