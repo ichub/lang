@@ -16,7 +16,11 @@ namespace Lang
         {
             this.Variables = parentScript.Variables;
 
-            this.topNode = Node.Create(this, null, expression);
+<<<<<<< HEAD:Lang/SyntaxTree.cs
+            this.topNode = Node.Create(this, null, script);
+=======
+            this.topNode = new Node(expression, this);
+>>>>>>> 9413f15af6cf4bd73d308ce5e05216b07fc9f5cd:Lang/Expression.cs
         }
 
         public Variable Evaluate()

@@ -11,7 +11,7 @@ namespace Lang
     /// </summary>
     class LiteralNode : Node
     {
-        public LiteralNode(SyntaxTree tree, Node parent, string expression)
+        public LiteralNode(Expression tree, Node parent, string expression)
             : base(tree, parent, expression)
         {
 

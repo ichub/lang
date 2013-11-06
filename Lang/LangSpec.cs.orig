@@ -9,49 +9,55 @@ namespace Lang
 {
     public static class LangSpec
     {
-        private static char expressionSeparator;
         private static char variableSeparator;
+        private static char expressionSeparator;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
+<<<<<<< HEAD
         private static string variablePattern;
+
+        private static Regex numberLiteral;
+        private static Regex booleanLiteral;
+        private static Regex variable;
+=======
         private static string stringLiteralPattern;
 
         private static Regex numberLiteral;
         private static Regex booleanLiteral;
         private static Regex stringLiteral;
-        private static Regex variable;
         private static Regex whiteSpace;
+>>>>>>> 9413f15af6cf4bd73d308ce5e05216b07fc9f5cd
 
         static LangSpec()
-        { 
+        {
             expressionSeparator = ';';
             variableSeparator = ',';
-            variablePattern = @"^([a-z]|[A-Z])+$";
+<<<<<<< HEAD
             numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
             booleanLiteralPattern = @"^(True)|(False)$";
-            stringLiteralPattern = "^\".*\"$";
+            variablePattern = @"^([a-z]|[A-Z])+$";
+
+            numberLiteral = new Regex(numberLiteralPattern);
+            booleanLiteral = new Regex(booleanLiteralPattern);
+            variable = new Regex(variablePattern);
+=======
+            numberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
+            booleanLiteralPattern = @"(True)|(False)";
+            stringLiteralPattern = "\".*\"";
 
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
             stringLiteral = new Regex(stringLiteralPattern);
-            variable = new Regex(variablePattern);
 
-            whiteSpace = new Regex(@"\s+|\\r|\\n");
+            whiteSpace = new Regex(@"\s+");
+>>>>>>> 9413f15af6cf4bd73d308ce5e05216b07fc9f5cd
         }
 
         public static string StripWhitespace(string input)
         {
-            return whiteSpace.Replace(input, "");
-        }
+            Regex whitespace = new Regex(@"\s");
 
-        public static bool IsLiteral(string input)
-        {
-            return GetLiteral(input) != null;
-        }
-
-        public static bool IsVariable(string input)
-        {
-            return variable.IsMatch(input);
+            return whitespace.Replace(input, "");
         }
 
         public static bool IsFunctionInvocation(string input)
@@ -61,6 +67,15 @@ namespace Lang
             return input[0] == '(' && input[input.Length - 1] == ')';
         }
 
+        public static bool IsLiteral(string script)
+        {
+            return GetLiteral(script) != null;
+        }
+
+        public static bool IsVariable(string input)
+        {
+            return variable.IsMatch(input);
+        }
         public static Variable GetLiteral(string script)
         {
             script = StripWhitespace(script);
@@ -131,11 +146,11 @@ namespace Lang
             return expressions.ToArray();
         }
 
-        public static string[] GetExpressions(string script)
+        public static string[] GetExpressions(Script context, string script)
         {
-            string stripped = whiteSpace.Replace(script, "");
+            script = whiteSpace.Replace(script, "");
 
-            return stripped.Split(expressionSeparator).Where(a => a != String.Empty).ToArray();
+            return script.Split(expressionSeparator).Where(a => a != "").ToArray();
         }
     }
 }

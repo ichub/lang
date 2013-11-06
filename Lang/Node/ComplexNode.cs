@@ -11,7 +11,7 @@ namespace Lang
     /// </summary>
     class ComplexNode : Node
     {
-        public ComplexNode(SyntaxTree tree, Node parent, string expression)
+        public ComplexNode(Expression tree, Node parent, string expression)
             : base(tree, parent, expression)
         {
             string[] expressions = LangSpec.DivideExpressions(expression);

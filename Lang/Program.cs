@@ -18,28 +18,13 @@ namespace Lang
 
         static void Main(string[] args)
         {
-            //while (true)
-            //{
-            //    Console.Write("> ");
+            string script = ReadFile(@"C:\Users\Ivan\Dev\Lang\Lang\test.txt");
+            Script s = new Script(script);
 
-            //    string script = Console.ReadLine();
+            Variable a = s.Evaluate();
 
-            //    SyntaxTree tree = new SyntaxTree(script);
-
-            //    Console.Write("> ");
-            //    Console.WriteLine(tree.Evaluate());
-            //    Console.WriteLine();
-            //}
-
-            while (true)
-            {
-                string scriptPath = Console.ReadLine();
-
-                Script sc = new Script(ReadFile(scriptPath));
-
-                Console.WriteLine();
-                Console.WriteLine(sc.Evaluate());
-            }
+            Console.WriteLine(a);
+            Console.ReadLine();
         }
 
         static string ReadFile(string path)

@@ -13,7 +13,7 @@ namespace Lang
     {
         private string variableName;
 
-        public VariableNode(SyntaxTree tree, Node parent, string expression)
+        public VariableNode(Expression tree, Node parent, string expression)
             : base(tree, parent, expression)
         {
             this.variableName = expression;

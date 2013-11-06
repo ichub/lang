@@ -21,7 +21,7 @@ namespace Lang
 
         public Variable Evaluate()
         {
-            string[] expressionLiterals = LangSpec.GetExpressions(this, this.script);
+            string[] expressionLiterals = LangSpec.GetExpressions(this.script);
 
             for (int i = 0; i < expressionLiterals.Length; i++)
             {

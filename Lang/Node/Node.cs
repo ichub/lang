@@ -21,7 +21,7 @@ namespace Lang
             }
         }
 
-        public SyntaxTree Tree { get; protected set; }
+        public Expression Tree { get; protected set; }
         public Node Parent { get; protected set; }
         public List<Node> Children { get; protected set; }
 
@@ -30,7 +30,7 @@ namespace Lang
         protected Variable value;
         protected string expression;
 
-        protected Node(SyntaxTree tree, Node parent, string expression)
+        protected Node(Expression tree, Node parent, string expression)
         {
             this.Children = new List<Node>();
 
@@ -51,7 +51,7 @@ namespace Lang
             }
         }
 
-        public static Node Create(SyntaxTree tree, Node parent, string expression)
+        public static Node Create(Expression tree, Node parent, string expression)
         {
             if (LangSpec.IsLiteral(expression))
             {
