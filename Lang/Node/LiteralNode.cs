@@ -17,12 +17,14 @@ namespace Lang
 
         }
 
-        public override void Evaluate()
+        public override Node Evaluate()
         {
             base.Evaluate();
 
-            this.value = LangSpec.GetLiteral(this.expression);
+            this.value = LangSpec.GetLiteral(this.Tree.ParentScript, this.expression);
             this.Evaluated = true;
+
+            return this;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Lang
             this.expression = expression;
         }
 
-        public virtual void Evaluate()
+        public virtual Node Evaluate()
         {
             if (!this.Evaluated)
             {
@@ -49,11 +49,13 @@ namespace Lang
                     child.Evaluate();
                 }
             }
+
+            return this;
         }
 
         public static Node Create(Expression tree, Node parent, string expression)
         {
-            if (LangSpec.IsLiteral(expression))
+            if (LangSpec.IsLiteral(tree.ParentScript, expression))
             {
                 return new LiteralNode(tree, parent, expression);
             }

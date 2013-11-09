@@ -9,19 +9,13 @@ namespace Lang
 {
     public class VarFunction : Variable<Func<Variable[], Variable>>
     {
-        public VariableType[] ArgTypes { get; private set; }
-        public int AmountOfArgs { get; private set; }
-
-        public VarFunction(Func<Variable[], Variable> value, VariableType[] argTypes) :
+        public VarFunction(Func<Variable[], Variable> value) :
             base(value)
         {
             this.Type = VariableType.Function;
-
-            this.ArgTypes = argTypes;
-            this.AmountOfArgs = argTypes.Length;
         }
 
-        public Variable Invoke(List<Node> parameters)
+        public virtual Variable Invoke(List<Node> parameters)
         {
             return this.Value.Invoke(parameters.Select(node => node.Value).ToArray());
         }

@@ -8,6 +8,22 @@ namespace Lang
 {
     public class Variable
     {
+        public bool Defined
+        {
+            get
+            {
+                return !(this is VarUndefined);
+            }
+        }
+
+        public static Variable Undefined
+        {
+            get
+            {
+                return new VarUndefined();
+            }
+        }
+
         public VariableType Type { get; protected set; }
 
         public override string ToString()

@@ -11,11 +11,14 @@ namespace Lang
     {
         private static char expressionSeparator;
         private static char variableSeparator;
+        private static char functionVariableSeparator;
+        private static string functionLiteralPattern;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
         private static string variablePattern;
         private static string stringLiteralPattern;
 
+        private static Regex functionLiteral;
         private static Regex numberLiteral;
         private static Regex booleanLiteral;
         private static Regex stringLiteral;
@@ -23,14 +26,17 @@ namespace Lang
         private static Regex whiteSpace;
 
         static LangSpec()
-        { 
+        {
             expressionSeparator = ';';
             variableSeparator = ',';
+            functionVariableSeparator = ':';
+            functionLiteralPattern = @"^\[.*\]\[.*\]$";
             variablePattern = @"^([a-z]|[A-Z])+$";
             numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
             booleanLiteralPattern = @"^(True)|(False)$";
             stringLiteralPattern = "^\".*\"$";
 
+            functionLiteral = new Regex(functionLiteralPattern);
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
             stringLiteral = new Regex(stringLiteralPattern);
@@ -44,9 +50,9 @@ namespace Lang
             return whiteSpace.Replace(input, "");
         }
 
-        public static bool IsLiteral(string input)
+        public static bool IsLiteral(Script script, string input)
         {
-            return GetLiteral(input) != null;
+            return GetLiteral(script, input) != null;
         }
 
         public static bool IsVariable(string input)
@@ -61,21 +67,25 @@ namespace Lang
             return input[0] == '(' && input[input.Length - 1] == ')';
         }
 
-        public static Variable GetLiteral(string script)
+        public static Variable GetLiteral(Script parentScript, string input)
         {
-            script = StripWhitespace(script);
+            input = StripWhitespace(input);
 
-            if (numberLiteral.IsMatch(script))
+            if (numberLiteral.IsMatch(input))
             {
-                return new VarNumber(double.Parse(script));
+                return new VarNumber(double.Parse(input));
             }
-            else if (booleanLiteral.IsMatch(script))
+            else if (booleanLiteral.IsMatch(input))
             {
-                return new VarBoolean(bool.Parse(script));
+                return new VarBoolean(bool.Parse(input));
             }
-            else if (stringLiteral.IsMatch(script))
+            else if (stringLiteral.IsMatch(input))
             {
-                return new VarString(script.Substring(1, script.Length - 2));
+                return new VarString(input.Substring(1, input.Length - 2));
+            }
+            else if (functionLiteral.IsMatch(input))
+            {
+                return VarUserFunction.Create(parentScript, input);
             }
 
             return null; // no literal match found
@@ -136,6 +146,16 @@ namespace Lang
             string stripped = whiteSpace.Replace(script, "");
 
             return stripped.Split(expressionSeparator).Where(a => a != String.Empty).ToArray();
+        }
+
+        public static Tuple<Expression, string[]> GetFunctionLiteralParts(Script parentScript, string functionLiteral)
+        {
+            string[] parts = functionLiteral.Split(new[] {'[', ']'}).Where(a => a != String.Empty).ToArray();
+            string[] names = parts[0].Split(functionVariableSeparator).Where(a => a != String.Empty).ToArray();
+
+            Expression expression = new Expression(parentScript, parts[1]);
+
+            return new Tuple<Expression, string[]>(expression, names);
         }
     }
 }

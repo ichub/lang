@@ -19,12 +19,14 @@ namespace Lang
             this.variableName = expression;
         }
 
-        public override void Evaluate()
+        public override Node Evaluate()
         {
             base.Evaluate();
 
             this.value = this.Tree.Variables[this.variableName];
             this.Evaluated = true;
+
+            return this;
         }
     }
 }

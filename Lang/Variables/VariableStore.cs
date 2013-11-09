@@ -11,20 +11,36 @@ namespace Lang
         public static VariableStore Default { get { return new VariableStore(); } }
 
         private Dictionary<string, Variable> variables;
+        private Stack<VariableStore> localVariables;
 
         public Variable this[string name]
         {
             get
             {
-                if (this.variables.ContainsKey(name))
+                if (this.localVariables.Count > 0)
+                {
+                    if (this.localVariables.Peek()[name].Defined)
+                    {
+                        return this.localVariables.Peek()[name];
+                    }
+                }
+                else if (this.variables.ContainsKey(name))
                 {
                     return this.variables[name];
                 }
 
-                return null;
+                return Variable.Undefined;
             }
             set
             {
+                if (this.localVariables.Count > 0)
+                {
+                    if (this.localVariables.Peek()[name].Defined)
+                    {
+                        this.localVariables.Peek()[name] = value;
+                        return;
+                    }
+                }
                 if (!this.variables.ContainsKey(name))
                 {
                     this.variables.Add(name, value);
@@ -36,7 +52,19 @@ namespace Lang
 
         private VariableStore()
         {
+            this.localVariables = new Stack<VariableStore>();
+
             this.Initialize();
+        }
+
+        public void PushUserFunction(VariableStore variables)
+        {
+            this.localVariables.Push(variables);
+        }
+
+        public void PopUserFunction()
+        {
+            this.localVariables.Pop();
         }
 
         private void Initialize()
@@ -54,8 +82,7 @@ namespace Lang
                                 this[name.Value] = vars[1];
 
                                 return vars[1];
-                            },
-                        new[] {VariableType.String, VariableType.Any}
+                            }
                     )
                 },
                 { 
@@ -65,8 +92,7 @@ namespace Lang
                         vars => 
                             {
                                 return vars[0];
-                            },
-                        new[] {VariableType.Any}
+                            }
                     )
                 },
                 { 
@@ -79,8 +105,7 @@ namespace Lang
 
                                 Console.WriteLine(var);
                                 return var;
-                            },
-                        new[] {VariableType.Any}
+                            }
                     )
                 },
                 { 
@@ -93,8 +118,7 @@ namespace Lang
                                 VarNumber second = (VarNumber)vars[1];
 
                                 return first + second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -107,8 +131,7 @@ namespace Lang
                                 VarNumber second = (VarNumber)vars[1];
 
                                 return first - second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -121,8 +144,7 @@ namespace Lang
                                 VarNumber second = (VarNumber)vars[1];
 
                                 return first * second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -135,8 +157,7 @@ namespace Lang
                                 VarNumber second = (VarNumber)vars[1];
 
                                 return first / second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -149,8 +170,7 @@ namespace Lang
                                 VarBoolean second = (VarBoolean)vars[1];
 
                                 return first & second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -163,8 +183,7 @@ namespace Lang
                                 VarBoolean second = (VarBoolean)vars[1];
 
                                 return first | second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -177,8 +196,7 @@ namespace Lang
                                 VarBoolean second = (VarBoolean)vars[1];
 
                                 return first ^ second;
-                            },
-                        new[] {VariableType.Number, VariableType.Number}
+                            }
                     )
                 },
                 {
@@ -191,8 +209,7 @@ namespace Lang
 
                                 return decider.Value ? vars[1] : vars[2];
                                 
-                            },
-                        new[] {VariableType.Boolean, VariableType.Any, VariableType.Any}
+                            }
                     )
                 },
                 {
@@ -202,8 +219,7 @@ namespace Lang
                         vars =>
                             {
                                 return new VarNumber(Program.Random.NextDouble());
-                            },
-                        new VariableType[] {}
+                            }
                     )
                 },
                 {

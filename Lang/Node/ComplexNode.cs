@@ -22,14 +22,34 @@ namespace Lang
             }
         }
 
-        public override void Evaluate()
+        public override Node Evaluate()
         {
             base.Evaluate();
 
+            List<Node> children = this.Children.GetRange(1, this.Children.Count - 1);
             VarFunction function = (VarFunction)this.Children[0].Value;
 
-            this.value = function.Invoke(this.Children.GetRange(1, this.Children.Count - 1));
+            if (function is VarUserFunction)
+            {
+                VarUserFunction userFunction = (VarUserFunction)function;
+                this.Tree.Variables.PushUserFunction(userFunction.LocalVariables);
+
+                for (int i = 0; i < userFunction.VariableNames.Length; i++)
+                {
+                    this.Tree.Variables[userFunction.VariableNames[i]] = children[i].Evaluate().Value;
+                }
+
+                this.Tree.Variables.PopUserFunction();
+
+            }
+            else
+            {
+                this.value = function.Invoke(children);
+            }
+
             this.Evaluated = true;
+
+            return this;
         }
     }
 }

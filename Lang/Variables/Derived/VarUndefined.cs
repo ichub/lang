@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    public enum VariableType
+    class VarUndefined : Variable
     {
-        Undefined,
-        Any,
-        Boolean,
-        Number,
-        Function,
-        String,
+        public VarUndefined()
+        {
+            this.Type = VariableType.Undefined;
+        }
     }
 }

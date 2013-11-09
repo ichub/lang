@@ -1,2 +1,2 @@
-(assign, "one", 1);
-(return, one);
+(assign, "one", [a:b][(add, a, b)]);
+(one, 2, 3);
