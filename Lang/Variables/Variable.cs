@@ -24,6 +24,14 @@ namespace Lang
             }
         }
 
+        public static Variable Unset
+        {
+            get
+            {
+                return new VarUnset();
+            }
+        }
+
         public VariableType Type { get; protected set; }
 
         public override string ToString()

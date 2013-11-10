@@ -51,6 +51,7 @@
     <Compile Include="Variables\Derived\VarBoolean.cs" />
     <Compile Include="Variables\Derived\VarString.cs" />
     <Compile Include="Variables\Derived\VarUndefined.cs" />
+    <Compile Include="Variables\Derived\VarUnset.cs" />
     <Compile Include="Variables\Derived\VarUserFunction.cs" />
     <Compile Include="Variables\VariableStore.cs" />
     <Compile Include="Variables\Derived\VarFunction.cs" />

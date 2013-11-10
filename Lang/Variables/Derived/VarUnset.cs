@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    public enum VariableType
+    class VarUnset : Variable
     {
-        Undefined,
-        Unset,
-        Boolean,
-        Number,
-        Function,
-        String,
+        public VarUnset()
+        {
+            this.Type = VariableType.Unset;
+        }
     }
 }

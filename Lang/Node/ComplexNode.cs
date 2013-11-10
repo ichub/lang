@@ -39,6 +39,8 @@ namespace Lang
                     this.Tree.Variables[userFunction.VariableNames[i]] = children[i].Evaluate().Value;
                 }
 
+                userFunction.Invoke();
+
                 this.Tree.Variables.PopUserFunction();
 
             }

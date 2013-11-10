@@ -30,7 +30,7 @@ namespace Lang
 
             for (int i = 0; i < parts.Item2.Length; i++)
             {
-                result.LocalVariables[parts.Item2[i]] = Variable.Undefined;
+                result.LocalVariables[parts.Item2[i]] = Variable.Unset;
             }
 
             result.VariableNames = parts.Item2;
