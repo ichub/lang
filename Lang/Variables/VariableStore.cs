@@ -13,40 +13,25 @@ namespace Lang
         private Dictionary<string, Variable> variables;
         private Stack<VariableStore> localVariables;
 
-        public Variable this[string name]
+        public Variable this[string name, VariableScope scope = VariableScope.All]
         {
             get
             {
-                if (this.localVariables.Count > 0)
+                switch (scope)
                 {
-                    if (this.localVariables.Peek()[name].Defined)
-                    {
-                        return this.localVariables.Peek()[name];
-                    }
+                    case VariableScope.All:
+                        break;
+                    case VariableScope.Local:
+                        break;
+                    case VariableScope.Global:
+                        break;
+                    default:
+                        break;
                 }
-                else if (this.variables.ContainsKey(name))
-                {
-                    return this.variables[name];
-                }
-
-                return Variable.Undefined;
             }
             set
             {
-                if (this.localVariables.Count > 0)
-                {
-                    if (this.localVariables.Peek()[name].Defined)
-                    {
-                        this.localVariables.Peek()[name] = value;
-                        return;
-                    }
-                }
-                if (!this.variables.ContainsKey(name))
-                {
-                    this.variables.Add(name, value);
-                }
-
-                this.variables[name] = value;
+                
             }
         }
 
@@ -65,6 +50,21 @@ namespace Lang
         public void PopUserFunction()
         {
             this.localVariables.Pop();
+        }
+
+        private void GetVariable(VariableScope scope)
+        {
+            switch (scope)
+            {
+                case VariableScope.All:
+                    break;
+                case VariableScope.Local:
+                    break;
+                case VariableScope.Global:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Initialize()
