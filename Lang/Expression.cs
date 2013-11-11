@@ -23,8 +23,6 @@ namespace Lang
 
         public Variable Evaluate()
         {
-            this.topNode.Evaluate();
-
             return this.topNode.Value;
         }
     }

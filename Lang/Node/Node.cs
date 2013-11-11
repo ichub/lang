@@ -12,12 +12,9 @@ namespace Lang
         {
             get
             {
-                if (this.Evaluated)
-                {
-                    return this.value;
-                }
+                this.Evaluate();
 
-                throw new Exception("Node has to be evaluated before its value can be accessed");
+                return this.value;
             }
         }
 
@@ -40,7 +37,7 @@ namespace Lang
             this.expression = expression;
         }
 
-        public virtual Node Evaluate()
+        protected virtual Node Evaluate()
         {
             if (!this.Evaluated)
             {

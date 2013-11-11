@@ -19,7 +19,7 @@ namespace Lang
             this.variableName = expression;
         }
 
-        public override Node Evaluate()
+        protected override Node Evaluate()
         {
             base.Evaluate();
 
