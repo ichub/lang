@@ -32,6 +32,17 @@ namespace Lang
             if (function is VarUserFunction)
             {
                 VarUserFunction userFunction = (VarUserFunction)function;
+
+                this.Expression.ParentScript.Variables.PushScope(userFunction.LocalVariables);
+
+                for (int i = 0; i < userFunction.VariableNames.Length; i++)
+                {
+                    this.Expression.ParentScript.Variables.SetVariable(userFunction.VariableNames[i], children[i].Value);
+                }
+
+                this.value = userFunction.Invoke();
+
+                this.Expression.ParentScript.Variables.PopScope();
             }
             else
             {

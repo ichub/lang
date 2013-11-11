@@ -8,7 +8,7 @@ namespace Lang
 {
     public class Script
     {
-        public VariableStore Variables { get; private set; }
+        public ScopedVariableStore Variables { get; private set; }
 
         private List<Expression> expressions;
 
@@ -16,7 +16,7 @@ namespace Lang
 
         public Script(string script)
         {
-            this.Variables = VariableStore.Default;
+            this.Variables = new ScopedVariableStore();
             this.script = script;
 
             string[] expressionLiterals = LangSpec.GetExpressions(this.script);

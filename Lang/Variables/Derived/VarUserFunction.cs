@@ -9,12 +9,13 @@ namespace Lang
     class VarUserFunction : VarFunction
     {
         public VariableStore LocalVariables { get; private set; }
+        public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
         
         private VarUserFunction(Func<Variable[], Variable> function)
             : base(function)
         {
-            this.LocalVariables = VariableStore.Default;
+            this.LocalVariables = VariableStore.Empty;
         }
 
         public static VarUserFunction Create(Script parentScript, string functionLiteral)
@@ -30,10 +31,11 @@ namespace Lang
 
             for (int i = 0; i < parts.Item2.Length; i++)
             {
-                result.LocalVariables.SetVariable(parts.Item2[i],  Variable.Unset);
+                result.LocalVariables.CreateVariable(parts.Item2[i]);
             }
 
             result.VariableNames = parts.Item2;
+            result.FunctionLiteral = functionLiteral;
 
             return result;
         }

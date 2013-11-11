@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lang.Variables
+namespace Lang
 {
-    class ScopedVariableStore : VariableStore
+    public class ScopedVariableStore : VariableStore
     {
         private Stack<VariableStore> scopes;
 
         public ScopedVariableStore()
         {
             this.scopes = new Stack<VariableStore>();
+
+            VariableStore.InsertDefaultVariables(this);
         }
 
         public void PushScope(VariableStore scope)

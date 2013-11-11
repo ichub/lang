@@ -10,17 +10,6 @@ namespace Lang
     {
         public static VariableStore Empty { get { return new VariableStore(); } }
 
-        public static VariableStore Default
-        {
-            get
-            {
-                VariableStore store = new VariableStore();
-                InsertDefaultVariables(store);
-
-                return store;
-            }
-        }
-
         private Dictionary<string, Variable> variables;
 
         protected VariableStore()
@@ -45,9 +34,10 @@ namespace Lang
 
         public virtual void SetVariable(string name, Variable value)
         {
-            if (!this.variables.ContainsKey(name))
+            if (this.variables.ContainsKey(name))
             {
-                this.variables.Add(name, value);
+                this.variables[name] = value;
+                return;
             }
 
             throw new Exception(String.Format("Variable {0} does not exist in the current context", name));
@@ -58,7 +48,7 @@ namespace Lang
             return this.variables.ContainsKey(name);
         }
 
-        private static void InsertDefaultVariables(VariableStore store)
+        protected static void InsertDefaultVariables(VariableStore store)
         {
             store.variables = new Dictionary<string, Variable>
             {
@@ -69,6 +59,11 @@ namespace Lang
                         vars => 
                             {
                                 VarString name = (VarString)vars[0];
+
+                                if (!store.ContainsVariable(name.Value))
+                                {
+                                    store.CreateVariable(name.Value);
+                                }
 
                                 store.SetVariable(name.Value, vars[1]);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    enum VariableScope
+    public enum VariableScope
     {
         All,
         Local,
