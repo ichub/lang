@@ -18,7 +18,7 @@ namespace Lang
 
             for (int i = 0; i < expressions.Length; i++)
             {
-                this.Children.Add(Node.Create(this.Tree, this, expressions[i]));
+                this.Children.Add(Node.Create(this.Expression, this, expressions[i]));
             }
         }
 
@@ -32,17 +32,6 @@ namespace Lang
             if (function is VarUserFunction)
             {
                 VarUserFunction userFunction = (VarUserFunction)function;
-                this.Tree.Variables.PushUserFunction(userFunction.LocalVariables);
-
-                for (int i = 0; i < userFunction.VariableNames.Length; i++)
-                {
-                    this.Tree.Variables[userFunction.VariableNames[i]] = children[i].Evaluate().Value;
-                }
-
-                userFunction.Invoke();
-
-                this.Tree.Variables.PopUserFunction();
-
             }
             else
             {

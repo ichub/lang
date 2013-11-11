@@ -8,68 +8,59 @@ namespace Lang
 {
     public class VariableStore
     {
-        public static VariableStore Default { get { return new VariableStore(); } }
+        public static VariableStore Empty { get { return new VariableStore(); } }
 
-        private Dictionary<string, Variable> variables;
-        private Stack<VariableStore> localVariables;
-
-        public Variable this[string name, VariableScope scope = VariableScope.All]
+        public static VariableStore Default
         {
             get
             {
-                switch (scope)
-                {
-                    case VariableScope.All:
-                        break;
-                    case VariableScope.Local:
-                        break;
-                    case VariableScope.Global:
-                        break;
-                    default:
-                        break;
-                }
+                VariableStore store = new VariableStore();
+                InsertDefaultVariables(store);
+
+                return store;
             }
-            set
+        }
+
+        private Dictionary<string, Variable> variables;
+
+        protected VariableStore()
+        {
+            this.variables = new Dictionary<string, Variable>();
+        }
+
+        public virtual void CreateVariable(string name)
+        {
+            this.variables.Add(name, Variable.Unset);
+        }
+
+        public virtual Variable GetVariable(string name)
+        {
+            if (this.variables.ContainsKey(name))
             {
-                
+                return this.variables[name];
             }
+
+            return Variable.Undefined;
         }
 
-        private VariableStore()
+        public virtual void SetVariable(string name, Variable value)
         {
-            this.localVariables = new Stack<VariableStore>();
-
-            this.Initialize();
-        }
-
-        public void PushUserFunction(VariableStore variables)
-        {
-            this.localVariables.Push(variables);
-        }
-
-        public void PopUserFunction()
-        {
-            this.localVariables.Pop();
-        }
-
-        private void GetVariable(VariableScope scope)
-        {
-            switch (scope)
+            if (!this.variables.ContainsKey(name))
             {
-                case VariableScope.All:
-                    break;
-                case VariableScope.Local:
-                    break;
-                case VariableScope.Global:
-                    break;
-                default:
-                    break;
+                this.variables.Add(name, value);
             }
+
+            throw new Exception(String.Format("Variable {0} does not exist in the current context", name));
         }
 
-        private void Initialize()
+        public virtual bool ContainsVariable(string name)
         {
-            this.variables = new Dictionary<string, Variable>
+            return this.variables.ContainsKey(name);
+        }
+
+        private static void InsertDefaultVariables(VariableStore store)
+        {
+            store.variables = new Dictionary<string, Variable>
             {
                 { 
                     "assign", 
@@ -79,7 +70,7 @@ namespace Lang
                             {
                                 VarString name = (VarString)vars[0];
 
-                                this[name.Value] = vars[1];
+                                store.SetVariable(name.Value, vars[1]);
 
                                 return vars[1];
                             }

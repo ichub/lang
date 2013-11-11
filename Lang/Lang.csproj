@@ -48,6 +48,7 @@
     <Compile Include="Node\VariableNode.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="Script.cs" />
+    <Compile Include="Variables\ScopedVariableStore.cs" />
     <Compile Include="Variables\VariableScope.cs" />
     <Compile Include="Variables\Derived\VarBoolean.cs" />
     <Compile Include="Variables\Derived\VarString.cs" />

@@ -23,7 +23,7 @@ namespace Lang
         {
             base.Evaluate();
 
-            this.value = this.Tree.Variables[this.variableName];
+            this.value = this.Expression.Variables.GetVariable(this.variableName);
             this.Evaluated = true;
 
             return this;

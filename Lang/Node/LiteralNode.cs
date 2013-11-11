@@ -21,7 +21,7 @@ namespace Lang
         {
             base.Evaluate();
 
-            this.value = LangSpec.GetLiteral(this.Tree.ParentScript, this.expression);
+            this.value = LangSpec.GetLiteral(this.Expression.ParentScript, this.expression);
             this.Evaluated = true;
 
             return this;

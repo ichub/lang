@@ -21,7 +21,7 @@ namespace Lang
             }
         }
 
-        public Expression Tree { get; protected set; }
+        public Expression Expression { get; protected set; }
         public Node Parent { get; protected set; }
         public List<Node> Children { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace Lang
         {
             this.Children = new List<Node>();
 
-            this.Tree = tree;
+            this.Expression = tree;
             this.Parent = parent;
 
             this.expression = expression;
