@@ -60,7 +60,7 @@ A Lang script always returns a value - the value of the last expression evaluate
 
 Note that the `return` function does not actually stop execution. The following would still return `3`:
 ```
-  (return 0);
+  (return, 0);
   (assign, "one", 1);
   (assign, "two", 2);
   (assign, "sum", (add, one, two));
