@@ -1,2 +1,5 @@
 (assign, "one", [a:b][(add, a, b)]);
-(one, 2, 3);
+(assign, "square", [a][(mul, a, a)]);
+
+(assign, "thing", [a][(ifthen, (less, a, 10), (thing, (add, a, 1)), a)]);
+(thing, 0);
