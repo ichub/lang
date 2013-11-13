@@ -44,7 +44,7 @@ You can print the value of a variable by using the `print` function:
 Branching can be achieved using the `ifthen` function. If the first parameter is true, then the second is returned, otherwise the 3rd is returned.
 
 ```
-  (ifthen, true, 1, 2);
+  (ifthen, True, 1, 2);
 ```
 
 The expression above would return `1`.
@@ -60,7 +60,7 @@ A Lang script always returns a value - the value of the last expression evaluate
 
 Note that the `return` function does not actually stop execution. The following would still return `3`:
 ```
-  (return 0);
+  (return, 0);
   (assign, "one", 1);
   (assign, "two", 2);
   (assign, "sum", (add, one, two));
