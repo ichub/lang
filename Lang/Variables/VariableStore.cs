@@ -159,6 +159,18 @@ namespace Lang
                             }
                     )
                 },
+                 {
+                    "not",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarBoolean boolean = (VarBoolean)vars[0];
+
+                                return !boolean;
+                            }
+                    )
+                },
                 {
                     "or",
                     new VarFunction

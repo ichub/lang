@@ -8,6 +8,8 @@ namespace Lang
 {
     public class ScopedVariableStore : VariableStore
     {
+        public int Depth { get { return this.scopes.Count; } }
+
         private Stack<VariableStore> scopes;
 
         public ScopedVariableStore()

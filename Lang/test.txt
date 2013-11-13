@@ -1,5 +1,2 @@
-(assign, "one", [a:b][(add, a, b)]);
-(assign, "square", [a][(mul, a, a)]);
-
-(assign, "thing", [a][(ifthen, (less, a, 10), (thing, (add, a, 1)), a)]);
-(thing, 0);
+(assign, "lel", [bool][(ifthen, bool, (lel, False), False)]);
+(lel, True);
