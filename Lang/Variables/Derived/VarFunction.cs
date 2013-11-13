@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lang
 {
-    public class VarFunction : Variable<Func<Variable[], Variable>>
+    public class VarFunction : Variable<Func<Node[], Variable>>
     {
-        public VarFunction(Func<Variable[], Variable> value) :
+        public VarFunction(Func<Node[], Variable> value) :
             base(value)
         {
             this.Type = VariableType.Function;
@@ -17,7 +17,7 @@ namespace Lang
 
         public virtual Variable Invoke(List<Node> parameters)
         {
-            return this.Value.Invoke(parameters.Select(node => node.Value).ToArray());
+            return this.Value.Invoke(parameters.ToArray());
         }
 
         public override string ToString()

@@ -24,8 +24,6 @@ namespace Lang
 
         protected override Node Evaluate()
         {
-            base.Evaluate();
-
             List<Node> children = this.Children.GetRange(1, this.Children.Count - 1);
             VarFunction function = (VarFunction)this.Children[0].Value;
 

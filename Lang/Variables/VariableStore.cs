@@ -58,16 +58,16 @@ namespace Lang
                     (
                         vars => 
                             {
-                                VarString name = (VarString)vars[0];
+                                VarString name = (VarString)vars[0].Value;
 
                                 if (!store.ContainsVariable(name.Value))
                                 {
                                     store.CreateVariable(name.Value);
                                 }
 
-                                store.SetVariable(name.Value, vars[1]);
+                                store.SetVariable(name.Value, vars[1].Value);
 
-                                return vars[1];
+                                return vars[1].Value;
                             }
                     )
                 },
@@ -77,7 +77,7 @@ namespace Lang
                     (
                         vars => 
                             {
-                                return vars[0];
+                                return vars[0].Value;
                             }
                     )
                 },
@@ -87,7 +87,7 @@ namespace Lang
                     (
                         vars => 
                             {
-                                Variable var = vars[0];
+                                Variable var = vars[0].Value;
 
                                 Console.WriteLine(var);
                                 return var;
@@ -100,8 +100,8 @@ namespace Lang
                     (
                         vars => 
                             {
-                                VarNumber first = (VarNumber)vars[0];
-                                VarNumber second = (VarNumber)vars[1];
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
 
                                 return first + second;
                             }
@@ -113,8 +113,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarNumber first = (VarNumber)vars[0];
-                                VarNumber second = (VarNumber)vars[1];
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
 
                                 return first - second;
                             }
@@ -126,8 +126,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarNumber first = (VarNumber)vars[0];
-                                VarNumber second = (VarNumber)vars[1];
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
 
                                 return first * second;
                             }
@@ -139,8 +139,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarNumber first = (VarNumber)vars[0];
-                                VarNumber second = (VarNumber)vars[1];
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
 
                                 return first / second;
                             }
@@ -152,8 +152,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarBoolean first = (VarBoolean)vars[0];
-                                VarBoolean second = (VarBoolean)vars[1];
+                                VarBoolean first = (VarBoolean)vars[0].Value;
+                                VarBoolean second = (VarBoolean)vars[1].Value;
 
                                 return first & second;
                             }
@@ -165,7 +165,7 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarBoolean boolean = (VarBoolean)vars[0];
+                                VarBoolean boolean = (VarBoolean)vars[0].Value;
 
                                 return !boolean;
                             }
@@ -177,8 +177,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarBoolean first = (VarBoolean)vars[0];
-                                VarBoolean second = (VarBoolean)vars[1];
+                                VarBoolean first = (VarBoolean)vars[0].Value;
+                                VarBoolean second = (VarBoolean)vars[1].Value;
 
                                 return first | second;
                             }
@@ -190,8 +190,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarBoolean first = (VarBoolean)vars[0];
-                                VarBoolean second = (VarBoolean)vars[1];
+                                VarBoolean first = (VarBoolean)vars[0].Value;
+                                VarBoolean second = (VarBoolean)vars[1].Value;
 
                                 return first ^ second;
                             }
@@ -203,9 +203,9 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarBoolean decider = (VarBoolean)vars[0];
+                                VarBoolean decider = (VarBoolean)vars[0].Value;
 
-                                return decider.Value ? vars[1] : vars[2];
+                                return decider.Value ? vars[1].Value : vars[2].Value;
                                 
                             }
                     )
@@ -226,8 +226,8 @@ namespace Lang
                     (
                         vars =>
                             {
-                                VarNumber first = (VarNumber)vars[0];
-                                VarNumber second = (VarNumber)vars[1];
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
 
                                 return new VarBoolean(first.Value < second.Value);
                             }

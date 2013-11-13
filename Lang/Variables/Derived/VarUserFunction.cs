@@ -12,7 +12,7 @@ namespace Lang
         public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
         
-        private VarUserFunction(Func<Variable[], Variable> function)
+        private VarUserFunction(Func<Node[], Variable> function)
             : base(function)
         {
             this.LocalVariables = VariableStore.Empty;
@@ -22,7 +22,7 @@ namespace Lang
         {
             var parts = LangSpec.GetFunctionLiteralParts(parentScript, functionLiteral);
 
-            Func<Variable[], Variable> function = vars =>
+            Func<Node[], Variable> function = vars =>
                 {
                     return parts.Item1.Evaluate();
                 };
