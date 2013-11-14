@@ -33,8 +33,6 @@ namespace Lang
 
                 this.Expression.ParentScript.Variables.PushScope(userFunction.LocalVariables);
 
-                System.Diagnostics.Debug.WriteLine(this.Expression.ParentScript.Variables.Depth);
-
                 for (int i = 0; i < userFunction.VariableNames.Length; i++)
                 {
                     this.Expression.ParentScript.Variables.SetVariable(userFunction.VariableNames[i], children[i].Value);
@@ -43,8 +41,6 @@ namespace Lang
                 this.value = userFunction.Invoke();
 
                 this.Expression.ParentScript.Variables.PopScope();
-
-                System.Diagnostics.Debug.WriteLine(this.Expression.ParentScript.Variables.Depth);
             }
             else
             {

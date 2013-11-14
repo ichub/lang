@@ -46,14 +46,6 @@ namespace Lang
 
         protected virtual Node Evaluate()
         {
-            if (!this.Evaluated)
-            {
-                foreach (Node child in this.Children)
-                {
-                    child.Evaluate();
-                }
-            }
-
             return this;
         }
 

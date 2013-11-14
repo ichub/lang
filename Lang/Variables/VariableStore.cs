@@ -234,6 +234,32 @@ namespace Lang
                     )
                 },
                 {
+                    "more",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
+
+                                return new VarBoolean(first.Value > second.Value);
+                            }
+                    )
+                },
+                {
+                    "equal",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarNumber first = (VarNumber)vars[0].Value;
+                                VarNumber second = (VarNumber)vars[1].Value;
+
+                                return new VarBoolean(first.Value == second.Value);
+                            }
+                    )
+                },
+                {
                     "PI",
                     new VarNumber(Math.PI)
                 }
