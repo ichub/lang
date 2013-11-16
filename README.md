@@ -2,7 +2,7 @@ Lang
 ====
 
 A simple interpreted language written in C#
-Lang is a functional programming language, created for fun. It is just an experiment.
+Lang is a functional programming language, created for fun.
 
 Specification
 -------------
@@ -67,9 +67,29 @@ Note that the `return` function does not actually stop execution. The following 
   (return, sum);
 ```
 
+New functions can be created using function literals. Function literals consist of the function parameters, and a single expression that is to be evaluated given those paramaters. For example, this function would square a number:
+
+```
+  (assign, "square", [a][(mul, a, a)]);
+  (square, 10);
+```
+
+Functions can have multiple parameters, separated by the `:` character.
+
+```
+  (assign, "myMultiply", [first:second][(mul, first, second)]);
+  (myMultiply, 19, 28);
+```
+
+Functions can also be recursive
+
+```
+  (assign, "factorial", [num][(ifthen, (more, num, 1), (mul, (factorial, (add, num, -1))), 1)]);
+  (factorial, 10);
+```
+
 Todo
 ----
-* Implement function literals, so that new functions can be defined in a script
 * Check script for validity before running it to prevent crashes
 * Add escape sequences to strings
 * Check for validity of variable names before assigning to them
