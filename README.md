@@ -2,7 +2,6 @@ Lang
 ====
 
 A simple interpreted language written in C#
-Lang is a functional programming language, created for fun.
 
 Specification
 -------------
