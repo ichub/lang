@@ -27,14 +27,14 @@ namespace Lang
         protected Variable value;
         protected string expression;
 
-        protected Node(Expression tree, Node parent, string expression)
+        protected Node(Expression expression, Node parent, string literal)
         {
             this.Children = new List<Node>();
 
-            this.Expression = tree;
+            this.Expression = expression;
             this.Parent = parent;
 
-            this.expression = expression;
+            this.expression = literal;
         }
 
         protected virtual Node Evaluate()
@@ -44,7 +44,7 @@ namespace Lang
 
         public static Node Create(Expression tree, Node parent, string expression)
         {
-            if (LangSpec.IsLiteral(tree.ParentScript, expression))
+            if (LangSpec.IsLiteral(tree.Script, expression))
             {
                 return new LiteralNode(tree, parent, expression);
             }

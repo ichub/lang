@@ -13,17 +13,17 @@ namespace Lang
     {
         private string variableName;
 
-        public VariableNode(Expression tree, Node parent, string expression)
-            : base(tree, parent, expression)
+        public VariableNode(Expression expression, Node parent, string literal)
+            : base(expression, parent, literal)
         {
-            this.variableName = expression;
+            this.variableName = literal;
         }
 
         protected override Node Evaluate()
         {
             base.Evaluate();
 
-            this.value = this.Expression.ParentScript.Variables.GetVariable(this.variableName);
+            this.value = this.Expression.Script.Variables.GetVariable(this.variableName);
             this.Evaluated = true;
 
             return this;

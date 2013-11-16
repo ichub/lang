@@ -67,7 +67,7 @@ namespace Lang
             return input[0] == '(' && input[input.Length - 1] == ')';
         }
 
-        public static Variable GetLiteral(Script parentScript, string input)
+        public static Variable GetLiteral(Script script, string input)
         {
             input = StripWhitespace(input);
 
@@ -85,7 +85,7 @@ namespace Lang
             }
             else if (functionLiteral.IsMatch(input))
             {
-                return VarUserFunction.Create(parentScript, input);
+                return VarUserFunction.Create(script, input);
             }
 
             return null; // no literal match found
@@ -148,12 +148,12 @@ namespace Lang
             return stripped.Split(expressionSeparator).Where(a => a != String.Empty).ToArray();
         }
 
-        public static Tuple<Expression, string[]> GetFunctionLiteralParts(Script parentScript, string functionLiteral)
+        public static Tuple<Expression, string[]> GetFunctionLiteralParts(Script script, string functionLiteral)
         {
             string[] parts = functionLiteral.Split(new[] {'[', ']'}).Where(a => a != String.Empty).ToArray();
             string[] names = parts[0].Split(functionVariableSeparator).Where(a => a != String.Empty).ToArray();
 
-            Expression expression = new Expression(parentScript, parts[1]);
+            Expression expression = new Expression(script, parts[1]);
 
             return new Tuple<Expression, string[]>(expression, names);
         }

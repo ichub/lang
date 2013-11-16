@@ -8,13 +8,13 @@ namespace Lang
 {
     public class Expression
     {
-        public Script ParentScript { get; private set; }
+        public Script Script { get; private set; }
 
         private Node topNode;
 
-        public Expression(Script parentScript, string expression)
+        public Expression(Script script, string expression)
         {
-            this.ParentScript = parentScript;
+            this.Script = script;
 
             this.topNode = Node.Create(this, null, expression);
         }
