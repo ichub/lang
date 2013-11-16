@@ -9,6 +9,7 @@ namespace Lang
     class VarUserFunction : VarFunction
     {
         public VariableStore LocalVariables { get; private set; }
+        public Script ParentScript { get; private set; }
         public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
         
@@ -36,13 +37,25 @@ namespace Lang
 
             result.VariableNames = parts.Item2;
             result.FunctionLiteral = functionLiteral;
+            result.ParentScript = parentScript;
 
             return result;
         }
 
-        public Variable Invoke()
+        public override Variable Invoke(List<Node> parameters)
         {
-            return this.Value.Invoke(null);
+            this.ParentScript.Variables.PushScope(this.LocalVariables);
+
+            for (int i = 0; i < this.VariableNames.Length; i++)
+            {
+                this.ParentScript.Variables.SetVariable(this.VariableNames[i], parameters[i].Value);
+            }
+
+            Variable value = this.Value.Invoke(null);
+
+            this.ParentScript.Variables.PopScope();
+
+            return value;
         }
     }
 }

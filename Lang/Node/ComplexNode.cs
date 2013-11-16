@@ -24,28 +24,10 @@ namespace Lang
 
         protected override Node Evaluate()
         {
-            List<Node> children = this.Children.GetRange(1, this.Children.Count - 1);
+            List<Node> parameters = this.Children.GetRange(1, this.Children.Count - 1);
             VarFunction function = (VarFunction)this.Children[0].Value;
 
-            if (function is VarUserFunction)
-            {
-                VarUserFunction userFunction = (VarUserFunction)function;
-
-                this.Expression.ParentScript.Variables.PushScope(userFunction.LocalVariables);
-
-                for (int i = 0; i < userFunction.VariableNames.Length; i++)
-                {
-                    this.Expression.ParentScript.Variables.SetVariable(userFunction.VariableNames[i], children[i].Value);
-                }
-
-                this.value = userFunction.Invoke();
-
-                this.Expression.ParentScript.Variables.PopScope();
-            }
-            else
-            {
-                this.value = function.Invoke(children);
-            }
+            this.value = function.Invoke(parameters);
 
             this.Evaluated = true;
 

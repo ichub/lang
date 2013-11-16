@@ -12,14 +12,7 @@ namespace Lang
         {
             get
             {
-                try
-                {
-                    this.Evaluate();
-                }
-                catch
-                {
-
-                }
+                this.Evaluate();
 
                 return this.value;
             }
