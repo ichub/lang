@@ -99,7 +99,7 @@ Built-in functions:
 * `ifthen` returns the second parameter if true, the third if false
 * `randfloat` returns a random double
 * `less` returns a boolean indicating if the first number is bigger than the second
-* `more` returns a boolean indicating of the first number is smaller than the second
+* `more` returns a boolean indicating if the first number is smaller than the second
 * `equal` returns a boolean indicating if two numbers are equal
 
 Built-in constants (can be overwritten):
