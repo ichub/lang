@@ -18,7 +18,7 @@ namespace Lang
             }
         }
 
-        public Expression Expression { get; protected set; }
+        public Script Script { get; protected set; }
         public Node Parent { get; protected set; }
         public List<Node> Children { get; protected set; }
 
@@ -27,12 +27,12 @@ namespace Lang
         protected Variable value;
         protected string expression;
 
-        protected Node(Expression expression, Node parent, string literal)
+        protected Node(Script script, Node parent, string literal)
         {
             this.Children = new List<Node>();
 
-            this.Expression = expression;
             this.Parent = parent;
+            this.Script = script;
 
             this.expression = literal;
         }
@@ -42,19 +42,19 @@ namespace Lang
             return this;
         }
 
-        public static Node Create(Expression tree, Node parent, string expression)
+        public static Node Parse(Script script, Node parent, string expression)
         {
-            if (LangSpec.IsLiteral(tree.Script, expression))
+            if (LangSpec.IsLiteral(script, expression))
             {
-                return new LiteralNode(tree, parent, expression);
+                return new LiteralNode(script, parent, expression);
             }
             else if (LangSpec.IsFunctionInvocation(expression))
             {
-                return new ComplexNode(tree, parent, expression);
+                return new ComplexNode(script, parent, expression);
             }
             else if (LangSpec.IsVariable(expression))
             {
-                return new VariableNode(tree, parent, expression);
+                return new VariableNode(script, parent, expression);
             }
             else
             {

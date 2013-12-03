@@ -85,7 +85,7 @@ namespace Lang
             }
             else if (functionLiteral.IsMatch(input))
             {
-                return VarUserFunction.Create(script, input);
+                return VarUserFunction.Parse(script, input);
             }
 
             return null; // no literal match found

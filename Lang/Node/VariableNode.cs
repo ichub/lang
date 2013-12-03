@@ -13,8 +13,8 @@ namespace Lang
     {
         private string variableName;
 
-        public VariableNode(Expression expression, Node parent, string literal)
-            : base(expression, parent, literal)
+        public VariableNode(Script script, Node parent, string literal)
+            : base(script, parent, literal)
         {
             this.variableName = literal;
         }
@@ -23,7 +23,7 @@ namespace Lang
         {
             base.Evaluate();
 
-            this.value = this.Expression.Script.Variables.GetVariable(this.variableName);
+            this.value = this.Script.Variables.GetVariable(this.variableName);
             this.Evaluated = true;
 
             return this;

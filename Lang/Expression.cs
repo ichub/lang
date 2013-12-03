@@ -16,7 +16,7 @@ namespace Lang
         {
             this.Script = script;
 
-            this.topNode = Node.Create(this, null, expression);
+            this.topNode = Node.Parse(this.Script, null, expression);
         }
 
         public Variable Evaluate()

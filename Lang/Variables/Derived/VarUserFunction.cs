@@ -20,7 +20,7 @@ namespace Lang
             this.LocalVariables = VariableStore.Empty;
         }
 
-        public static VarUserFunction Create(Script script, string functionLiteral)
+        public static VarUserFunction Parse(Script script, string functionLiteral)
         {
             var parts = LangSpec.GetFunctionLiteralParts(script, functionLiteral);
 

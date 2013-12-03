@@ -11,14 +11,14 @@ namespace Lang
     /// </summary>
     class ComplexNode : Node
     {
-        public ComplexNode(Expression expression, Node parent, string literal)
-            : base(expression, parent, literal)
+        public ComplexNode(Script script, Node parent, string literal)
+            : base(script, parent, literal)
         {
             string[] expressions = LangSpec.DivideExpressions(literal);
 
             for (int i = 0; i < expressions.Length; i++)
             {
-                this.Children.Add(Node.Create(this.Expression, this, expressions[i]));
+                this.Children.Add(Node.Parse(this.Script, this, expressions[i]));
             }
         }
 
