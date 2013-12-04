@@ -36,7 +36,7 @@ namespace Lang
 
         public static VarList Parse(Script script, Node parent, string input)
         {
-            string[] parts = LangSpec.DivideExpressions(input, '{', '}');
+            string[] parts = LangSpec.DivideExpressions(input, '|', '{', '}');
 
             VarList list = new VarList();
 
@@ -58,10 +58,8 @@ namespace Lang
 
                 if (i != this.Value.Count - 1)
                 {
-                    str += ",";
+                    str += "| ";
                 }
-
-                str += " ";
             }
 
             str += "}";

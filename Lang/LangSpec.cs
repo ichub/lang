@@ -99,7 +99,7 @@ namespace Lang
             return null; // no literal match found
         }
 
-        public static string[] DivideExpressions(string expression, char parenOpen = '(', char parenClose = ')')
+        public static string[] DivideExpressions(string expression, char divider = ',', char parenOpen = '(', char parenClose = ')')
         {
             expression = StripWhitespace(expression);
 
@@ -133,7 +133,7 @@ namespace Lang
 
                 if (parensCount == 0)
                 {
-                    if (currentChar == variableSeparator)
+                    if (currentChar == divider)
                     {
                         expressions.Add(accumulator);
                         accumulator = "";
