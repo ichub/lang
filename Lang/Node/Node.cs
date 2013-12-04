@@ -44,7 +44,7 @@ namespace Lang
 
         public static Node Parse(Script script, Node parent, string expression)
         {
-            if (LangSpec.IsLiteral(script, expression))
+            if (LangSpec.IsLiteral(script, parent, expression))
             {
                 return new LiteralNode(script, parent, expression);
             }

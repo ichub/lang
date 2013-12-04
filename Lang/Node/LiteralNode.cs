@@ -16,7 +16,7 @@ namespace Lang
 
         protected override Node Evaluate()
         {
-            this.value = LangSpec.GetLiteral(this.Script, this.expression);
+            this.value = LangSpec.GetLiteral(this.Script, this, this.expression);
             this.Evaluated = true;
 
             return this;

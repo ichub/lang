@@ -17,6 +17,7 @@ namespace Lang
         private static string booleanLiteralPattern;
         private static string variablePattern;
         private static string stringLiteralPattern;
+        private static string listLiteralPattern;
 
         private static Regex functionLiteral;
         private static Regex numberLiteral;
@@ -24,6 +25,7 @@ namespace Lang
         private static Regex stringLiteral;
         private static Regex variable;
         private static Regex whiteSpace;
+        private static Regex listLiteral;
 
         static LangSpec()
         {
@@ -35,12 +37,14 @@ namespace Lang
             numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
             booleanLiteralPattern = @"^(True)|(False)$";
             stringLiteralPattern = "^\".*\"$";
+            listLiteralPattern = "^{.*}$";
 
             functionLiteral = new Regex(functionLiteralPattern);
             numberLiteral = new Regex(numberLiteralPattern);
             booleanLiteral = new Regex(booleanLiteralPattern);
             stringLiteral = new Regex(stringLiteralPattern);
             variable = new Regex(variablePattern);
+            listLiteral = new Regex(listLiteralPattern);
 
             whiteSpace = new Regex(@"\s+|\\r|\\n");
         }
@@ -50,9 +54,9 @@ namespace Lang
             return whiteSpace.Replace(input, "");
         }
 
-        public static bool IsLiteral(Script script, string input)
+        public static bool IsLiteral(Script script, Node parent, string input)
         {
-            return GetLiteral(script, input) != null;
+            return GetLiteral(script, parent, input) != null;
         }
 
         public static bool IsVariable(string input)
@@ -67,7 +71,7 @@ namespace Lang
             return input[0] == '(' && input[input.Length - 1] == ')';
         }
 
-        public static Variable GetLiteral(Script script, string input)
+        public static Variable GetLiteral(Script script, Node parent, string input)
         {
             input = StripWhitespace(input);
 
@@ -87,11 +91,15 @@ namespace Lang
             {
                 return VarUserFunction.Parse(script, input);
             }
+            else if (listLiteral.IsMatch(input))
+            {
+                return VarList.Parse(script, parent, input);
+            }
 
             return null; // no literal match found
         }
 
-        public static string[] DivideExpressions(string expression)
+        public static string[] DivideExpressions(string expression, char parenOpen = '(', char parenClose = ')')
         {
             expression = StripWhitespace(expression);
 
@@ -104,7 +112,7 @@ namespace Lang
             {
                 char currentChar = expression[i];
 
-                if (currentChar == '(')
+                if (currentChar == parenOpen)
                 {
                     if (i == 0)
                     {
@@ -113,7 +121,7 @@ namespace Lang
 
                     parensCount++;
                 }
-                else if (currentChar == ')')
+                else if (currentChar == parenClose)
                 {
                     if (i == expression.Length - 1)
                     {
