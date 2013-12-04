@@ -36,7 +36,7 @@ namespace Lang
             variablePattern = @"^([a-z]|[A-Z])+$";
             numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
             booleanLiteralPattern = @"^(True)|(False)$";
-            stringLiteralPattern = "^\".*\"$";
+            stringLiteralPattern = "^\"([a-z][A-Z])*\"$";
             listLiteralPattern = "^{.*}$";
 
             functionLiteral = new Regex(functionLiteralPattern);
