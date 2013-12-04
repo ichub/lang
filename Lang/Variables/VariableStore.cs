@@ -260,6 +260,51 @@ namespace Lang
                     )
                 },
                 {
+                    "get",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarList list = (VarList)vars[0].Value;
+                                VarNumber index = (VarNumber)vars[1].Value;
+
+                                return list.GetAt((int)index.Value);
+                            }
+                    )
+                },
+                {
+                    "set",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarList list = (VarList)vars[0].Value;
+                                VarNumber index = (VarNumber)vars[1].Value;
+                                Variable value = vars[2].Value;
+
+
+                                list.Set((int)index.Value, value);
+
+                                return list;
+                            }
+                    )
+                },
+                {
+                    "append",
+                    new VarFunction
+                    (
+                        vars =>
+                            {
+                                VarList list = (VarList)vars[0].Value;
+                                Variable value = (VarNumber)vars[1].Value;
+
+                                list.Add(value);
+
+                                return list;
+                            }
+                    )
+                },
+                {
                     "PI",
                     new VarNumber(Math.PI)
                 }

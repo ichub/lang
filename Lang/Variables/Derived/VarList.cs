@@ -34,6 +34,11 @@ namespace Lang
             return this.Value.ToArray()[index];
         }
 
+        public void Set(int index, Variable value)
+        {
+            this.Value[index] = value;
+        }
+
         public static VarList Parse(Script script, Node parent, string input)
         {
             string[] parts = LangSpec.DivideExpressions(input, '|', '{', '}');
