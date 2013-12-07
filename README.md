@@ -97,7 +97,7 @@ Lists are created using list literals like this:
 Each item in the list is separated by the `|` symbol, and the entire list is enclosed in angle brackets. A list does not place any restriction on the types of its content, so the following list would also be valid:
 
 ```
-{ 1 | "test" | False, [a:b][(add, a, b)] }
+{ 1 | "test" | False | [a:b][(add, a, b)] }
 ```
 
 You can add, get, and set variables in a list using their index. Lists are 0-indexed.
