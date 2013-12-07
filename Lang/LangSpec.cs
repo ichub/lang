@@ -9,9 +9,14 @@ namespace Lang
 {
     public static class LangSpec
     {
-        private static char expressionSeparator;
-        private static char variableSeparator;
-        private static char functionVariableSeparator;
+        private const char expressionSeparator = ';';
+        private const char variableSeparator = ',';
+        private const char functionVariableSeparator = ':';
+        private const char expressionOpen = '(';
+        private const char expressionClose = ')';
+        private const char funcOpen = '[';
+        private const char funcClose = ']';
+
         private static string functionLiteralPattern;
         private static string numberLiteralPattern;
         private static string booleanLiteralPattern;
@@ -29,9 +34,6 @@ namespace Lang
 
         static LangSpec()
         {
-            expressionSeparator = ';';
-            variableSeparator = ',';
-            functionVariableSeparator = ':';
             functionLiteralPattern = @"^\[.*\]\[.*\]$";
             variablePattern = @"^([a-z]|[A-Z])+$";
             numberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
@@ -51,7 +53,7 @@ namespace Lang
 
         public static string StripWhitespace(string input)
         {
-            return whiteSpace.Replace(input, "");
+            return whiteSpace.Replace(input, String.Empty);
         }
 
         public static bool IsLiteral(Script script, Node parent, string input)
@@ -66,15 +68,11 @@ namespace Lang
 
         public static bool IsFunctionInvocation(string input)
         {
-            input = StripWhitespace(input);
-
-            return input[0] == '(' && input[input.Length - 1] == ')';
+            return input[0] == expressionOpen && input[input.Length - 1] == expressionClose;
         }
 
         public static Variable GetLiteral(Script script, Node parent, string input)
         {
-            input = StripWhitespace(input);
-
             if (numberLiteral.IsMatch(input))
             {
                 return new VarNumber(double.Parse(input));
@@ -99,13 +97,19 @@ namespace Lang
             return null; // no literal match found
         }
 
-        public static string[] DivideExpressions(string expression, char divider = ',', char parenOpen = '(', char parenClose = ')')
+        /// <summary>
+        /// Divides a string into sections, defined by the separator, open and closing characters. Takes into account nested sections, assuming that those sections
+        /// use the same seprator, open and close characters. An example:
+        /// 
+        /// DivideIntoParts("(1, 2, (3, 4)", ',', '(', ')'); Would return the following array:
+        /// 
+        /// { "1", "2", "(3, 4)" }
+        /// </summary>
+        public static string[] DivideIntoParts(string expression, char divider = variableSeparator, char parenOpen = expressionOpen, char parenClose = expressionClose)
         {
-            expression = StripWhitespace(expression);
-
             List<string> expressions = new List<string>();
 
-            string accumulator = "";
+            string accumulator = String.Empty;
             int parensCount = 0;
 
             for (int i = 0; i < expression.Length; i++)
@@ -136,7 +140,7 @@ namespace Lang
                     if (currentChar == divider)
                     {
                         expressions.Add(accumulator);
-                        accumulator = "";
+                        accumulator = String.Empty;
                         continue;
                     }
                 }
@@ -151,14 +155,12 @@ namespace Lang
 
         public static string[] GetExpressions(string script)
         {
-            string stripped = whiteSpace.Replace(script, "");
-
-            return stripped.Split(expressionSeparator).Where(a => a != String.Empty).ToArray();
+            return script.Split(expressionSeparator).Where(a => a != String.Empty).ToArray();
         }
 
         public static Tuple<Expression, string[]> GetFunctionLiteralParts(Script script, string functionLiteral)
         {
-            string[] parts = functionLiteral.Split(new[] {'[', ']'}).Where(a => a != String.Empty).ToArray();
+            string[] parts = functionLiteral.Split(new[] { funcOpen, funcClose }).Where(a => a != String.Empty).ToArray();
             string[] names = parts[0].Split(functionVariableSeparator).Where(a => a != String.Empty).ToArray();
 
             Expression expression = new Expression(script, parts[1]);

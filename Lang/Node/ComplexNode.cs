@@ -14,7 +14,7 @@ namespace Lang
         public ComplexNode(Script script, Node parent, string literal)
             : base(script, parent, literal)
         {
-            string[] expressions = LangSpec.DivideExpressions(literal);
+            string[] expressions = LangSpec.DivideIntoParts(literal);
 
             for (int i = 0; i < expressions.Length; i++)
             {

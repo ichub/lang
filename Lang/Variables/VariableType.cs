@@ -14,5 +14,6 @@ namespace Lang
         Number,
         Function,
         String,
+        List,
     }
 }

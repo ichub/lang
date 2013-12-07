@@ -13,7 +13,7 @@ namespace Lang
         public VarList()
             : base(new List<Variable>())
         {
-
+            this.Type = VariableType.List;
         }
 
         public void Add(Variable variable)
@@ -41,7 +41,7 @@ namespace Lang
 
         public static VarList Parse(Script script, Node parent, string input)
         {
-            string[] parts = LangSpec.DivideExpressions(input, '|', '{', '}');
+            string[] parts = LangSpec.DivideIntoParts(input, '|', '{', '}');
 
             VarList list = new VarList();
 

@@ -17,7 +17,7 @@ namespace Lang
         public Script(string script)
         {
             this.Variables = new ScopedVariableStore();
-            this.script = script;
+            this.script = LangSpec.StripWhitespace(script);
 
             string[] expressionLiterals = LangSpec.GetExpressions(this.script);
 
