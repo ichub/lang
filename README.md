@@ -11,6 +11,7 @@ There are 4 types:
 * strings
 * functions
 * booleans
+* lists
 
 Every single variable is one of those types; there is no null.
 
@@ -87,6 +88,21 @@ Functions can also be recursive
   (factorial, 10);
 ```
 
+Lists are created using list literals like this:
+
+```
+  { 1 | 2 | 3 | 4 }
+```
+
+Each item in the list is separated by the `|` symbol, and the entire list is enclosed in angle brackets. A list does not place any restriction on the types of its content, so the following list would also be valid:
+
+```
+{ 1 | "test" | False, [a:b][(add, a, b)] }
+```
+
+You can add, get, and set variables in a list using their index. Lists are 0-indexed.
+
+
 Built-in functions:
 * `assign` assigns a value to a variable with the given name. If that variable doesn't exist, creates it
 * `return` returns the variable that it is given
@@ -101,6 +117,9 @@ Built-in functions:
 * `less` returns a boolean indicating if the first number is bigger than the second
 * `more` returns a boolean indicating if the first number is smaller than the second
 * `equal` returns a boolean indicating if two numbers are equal
+* `append` adds a value to the end of a list
+* `get` gets the variable at a given index in the list
+* `set` sets the variable at a given index in the list
 
 Built-in constants (can be overwritten):
 * `PI` is PI
@@ -108,6 +127,4 @@ Built-in constants (can be overwritten):
 Todo
 ----
 * Check script for validity before running it to prevent crashes
-* Add escape sequences to strings
 * Check for validity of variable names before assigning to them
-* Fix whitespace stripping so that it doesn't remove whitespace in string literals
