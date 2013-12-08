@@ -1,2 +1,2 @@
-(assign, "factorial", [num][(ifthen, (more, num, 1), (mul, num, (factorial, (add, num, -1))), 1)]);
+(assign, "factorial", [num][(ifthen, (more, num, 1), (mul, num, (this, (add, num, -1))), 1)]);
 (factorial, 10);

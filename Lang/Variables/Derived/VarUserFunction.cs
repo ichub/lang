@@ -19,6 +19,9 @@ namespace Lang
             : base(arity, function ?? (a => a[0].Value))
         {
             this.LocalVariables = VariableStore.Empty;
+
+            this.LocalVariables.CreateVariable("this");
+            this.LocalVariables.SetVariable("this", this);
         }
 
         public static VarUserFunction Parse(string functionLiteral)
