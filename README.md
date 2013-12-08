@@ -84,7 +84,7 @@ Functions can have multiple parameters, separated by the `:` character.
 Functions can also be recursive
 
 ```
-  (assign, "factorial", [num][(ifthen, (more, num, 1), (mul, (factorial, (add, num, -1))), 1)]);
+  (assign, "factorial", [num][(ifthen, (more, num, 1), (mul, num, (factorial, (add, num, -1))), 1)]);
   (factorial, 10);
 ```
 
