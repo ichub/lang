@@ -56,9 +56,9 @@ namespace Lang
             return Whitespace.Replace(input, String.Empty);
         }
 
-        public static bool IsLiteral(Script script, Node parent, string input)
+        public static bool IsLiteral(string input)
         {
-            return GetLiteral(script, parent, input) != null;
+            return GetLiteral(input) != null;
         }
 
         public static bool IsVariable(string input)
@@ -71,7 +71,7 @@ namespace Lang
             return input[0] == ExpressionOpen && input[input.Length - 1] == ExpressionClose;
         }
 
-        public static Variable GetLiteral(Script script, Node parent, string input)
+        public static Variable GetLiteral(string input)
         {
             if (NumberLiteral.IsMatch(input))
             {
@@ -87,11 +87,11 @@ namespace Lang
             }
             else if (FunctionLiteral.IsMatch(input))
             {
-                return VarUserFunction.Parse(script, input);
+                return VarUserFunction.Parse(input);
             }
             else if (ListLiteral.IsMatch(input))
             {
-                return VarList.Parse(script, parent, input);
+                return VarList.Parse(input);
             }
 
             return null; // no literal match found
@@ -158,12 +158,12 @@ namespace Lang
             return script.Split(ExpressionSeparator).Where(a => a != String.Empty).ToArray();
         }
 
-        public static Tuple<Expression, string[]> GetFunctionLiteralParts(Script script, string functionLiteral)
+        public static Tuple<Expression, string[]> GetFunctionLiteralParts(string functionLiteral)
         {
             string[] parts = functionLiteral.Split(new[] { FuncOpen, FuncClose }).Where(a => a != String.Empty).ToArray();
             string[] names = parts[0].Split(FunctionVariableSeparator).Where(a => a != String.Empty).ToArray();
 
-            Expression expression = new Expression(script, parts[1]);
+            Expression expression = new Expression(parts[1]);
 
             return new Tuple<Expression, string[]>(expression, names);
         }

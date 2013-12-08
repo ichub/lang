@@ -9,7 +9,6 @@ namespace Lang
     class VarUserFunction : VarFunction
     {
         public VariableStore LocalVariables { get; private set; }
-        public Script Script { get; private set; }
 
         public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
@@ -20,13 +19,13 @@ namespace Lang
             this.LocalVariables = VariableStore.Empty;
         }
 
-        public static VarUserFunction Parse(Script script, string functionLiteral)
+        public static VarUserFunction Parse(string functionLiteral)
         {
-            var parts = LangSpec.GetFunctionLiteralParts(script, functionLiteral);
+            var parts = LangSpec.GetFunctionLiteralParts(functionLiteral);
 
             Func<Node[], Variable> function = vars =>
                 {
-                    return parts.Item1.Evaluate();
+                    return parts.Item1.Value;
                 };
 
             VarUserFunction result = new VarUserFunction(function);
@@ -38,23 +37,22 @@ namespace Lang
 
             result.VariableNames = parts.Item2;
             result.FunctionLiteral = functionLiteral;
-            result.Script = script;
 
             return result;
         }
 
-        public override Variable Invoke(List<Node> parameters)
+        public override Variable Invoke(List<Node> parameters, Script script = null)
         {
-            this.Script.Variables.PushScope(this.LocalVariables);
+            script.Variables.PushScope(this.LocalVariables);
 
             for (int i = 0; i < this.VariableNames.Length; i++)
             {
-                this.Script.Variables.SetVariable(this.VariableNames[i], parameters[i].Value);
+                script.Variables.SetVariable(this.VariableNames[i], parameters[i].Value);
             }
 
             Variable value = this.Value.Invoke(null);
 
-            this.Script.Variables.PopScope();
+            script.Variables.PopScope();
 
             return value;
         }

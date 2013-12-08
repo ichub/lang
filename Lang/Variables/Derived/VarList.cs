@@ -39,7 +39,7 @@ namespace Lang
             this.Value[index] = value;
         }
 
-        public static VarList Parse(Script script, Node parent, string input)
+        public static VarList Parse(string input)
         {
             string[] parts = LangSpec.DivideIntoParts(input, '|', '{', '}');
 
@@ -47,7 +47,7 @@ namespace Lang
 
             for (int i = 0; i < parts.Length; i++)
             {
-                list.Add(Node.Parse(script, parent, parts[i]).Value);
+                list.Add(Node.Parse(parts[i]).Value);
             }
 
             return list;

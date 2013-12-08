@@ -8,20 +8,36 @@ namespace Lang
 {
     public class Expression
     {
-        public Script Script { get; private set; }
-
-        private Node topNode;
-
-        public Expression(Script script, string expression)
+        public Variable Value
         {
-            this.Script = script;
-
-            this.topNode = Node.Parse(this.Script, null, expression);
+            get
+            {
+                return this.topNode.Value;
+            }
         }
 
-        public Variable Evaluate()
+        public Script Script
         {
-            return this.topNode.Value;
+            get
+            {
+                return this.script;
+            }
+            set
+            {
+                this.script = value;
+                this.topNode.Script = value;
+            }
+        }
+
+        public bool Orphan { get { return this.Script == null; } }
+
+        private Node topNode;
+        private Script script;
+
+        public Expression(string expression)
+        {
+            this.topNode = Node.Parse(expression);
+            this.topNode.Script = this.Script;
         }
     }
 }

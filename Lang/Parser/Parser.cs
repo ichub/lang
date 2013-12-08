@@ -8,5 +8,9 @@ namespace Lang
 {
     static class Parser
     {
+        public static TokenString ParseString(string input)
+        {
+            return new TokenString(new List<Token>());
+        }
     }
 }

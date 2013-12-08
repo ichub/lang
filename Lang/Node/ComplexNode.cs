@@ -11,18 +11,18 @@ namespace Lang
     /// </summary>
     class ComplexNode : Node
     {
-        public ComplexNode(Script script, Node parent, string literal)
-            : base(script, parent, literal)
+        public ComplexNode(string literal, Node parent = null)
+            : base(literal, parent)
         {
             string[] expressions = LangSpec.DivideIntoParts(literal);
 
             for (int i = 0; i < expressions.Length; i++)
             {
-                this.Children.Add(Node.Parse(this.Script, this, expressions[i]));
+                this.Children.Add(Node.Parse(expressions[i]));
             }
         }
 
-        protected override Node Evaluate()
+        protected override Node Evaluate(Script script)
         {
             List<Node> parameters = this.Children.GetRange(1, this.Children.Count - 1);
             VarFunction function = (VarFunction)this.Children[0].Value;

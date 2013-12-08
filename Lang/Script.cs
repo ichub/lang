@@ -21,14 +21,20 @@ namespace Lang
 
             string[] expressionLiterals = LangSpec.GetExpressions(this.script);
 
-            this.expressions = expressionLiterals.Select(lit => new Expression(this, lit)).ToList();
+            this.expressions = expressionLiterals.Select(lit => 
+                {
+                    var exp = new Expression(lit);
+                    exp.Script = this;
+                    return exp;
+                })
+                .ToList();
         }
 
         public Variable Evaluate()
         {
             for (int i = 0; i < this.expressions.Count; i++)
             {
-                Variable result = expressions[i].Evaluate();
+                Variable result = expressions[i].Value;
 
                 if (i == expressions.Count - 1)
                 {

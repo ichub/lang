@@ -11,12 +11,12 @@ namespace Lang
     /// </summary>
     class LiteralNode : Node
     {
-        public LiteralNode(Script script, Node parent, string literal)
-            : base(script, parent, literal) { }
+        public LiteralNode(string literal, Node parent = null)
+            : base(literal, parent) { }
 
-        protected override Node Evaluate()
+        protected override Node Evaluate(Script script)
         {
-            this.value = LangSpec.GetLiteral(this.Script, this, this.expression);
+            this.value = LangSpec.GetLiteral(this.expression);
             this.Evaluated = true;
 
             return this;

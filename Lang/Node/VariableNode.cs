@@ -13,17 +13,15 @@ namespace Lang
     {
         private string variableName;
 
-        public VariableNode(Script script, Node parent, string literal)
-            : base(script, parent, literal)
+        public VariableNode(string literal, Node parent = null)
+            : base(literal, parent)
         {
             this.variableName = literal;
         }
 
-        protected override Node Evaluate()
+        protected override Node Evaluate(Script script)
         {
-            base.Evaluate();
-
-            this.value = this.Script.Variables.GetVariable(this.variableName);
+            this.value = script.Variables.GetVariable(this.variableName);
             this.Evaluated = true;
 
             return this;

@@ -15,7 +15,7 @@ namespace Lang
             this.Type = VariableType.Function;
         }
 
-        public virtual Variable Invoke(List<Node> parameters)
+        public virtual Variable Invoke(List<Node> parameters, Script script = null)
         {
             return this.Value.Invoke(parameters.ToArray());
         }
