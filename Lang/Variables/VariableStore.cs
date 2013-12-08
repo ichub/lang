@@ -56,6 +56,7 @@ namespace Lang
                     "assign", 
                     new VarFunction
                     (
+                        2,
                         vars => 
                             {
                                 VarString name = (VarString)vars[0].Value;
@@ -75,6 +76,7 @@ namespace Lang
                     "return", 
                     new VarFunction
                     (
+                        1,
                         vars => 
                             {
                                 return vars[0].Value;
@@ -85,6 +87,7 @@ namespace Lang
                     "print", 
                     new VarFunction
                     (
+                        1,
                         vars => 
                             {
                                 Variable var = vars[0].Value;
@@ -98,6 +101,7 @@ namespace Lang
                     "add", 
                     new VarFunction
                     (
+                        2,
                         vars => 
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -111,6 +115,7 @@ namespace Lang
                     "sub",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -124,6 +129,7 @@ namespace Lang
                     "mul",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -137,6 +143,7 @@ namespace Lang
                     "div",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -150,6 +157,7 @@ namespace Lang
                     "and",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarBoolean first = (VarBoolean)vars[0].Value;
@@ -163,6 +171,7 @@ namespace Lang
                     "not",
                     new VarFunction
                     (
+                        1,
                         vars =>
                             {
                                 VarBoolean boolean = (VarBoolean)vars[0].Value;
@@ -175,6 +184,7 @@ namespace Lang
                     "or",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarBoolean first = (VarBoolean)vars[0].Value;
@@ -188,6 +198,7 @@ namespace Lang
                     "xor",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarBoolean first = (VarBoolean)vars[0].Value;
@@ -201,6 +212,7 @@ namespace Lang
                     "ifthen",
                     new VarFunction
                     (
+                        3,
                         vars =>
                             {
                                 VarBoolean decider = (VarBoolean)vars[0].Value;
@@ -214,6 +226,7 @@ namespace Lang
                     "randfloat",
                     new VarFunction
                     (
+                        0,
                         vars =>
                             {
                                 return new VarNumber(Program.Random.NextDouble());
@@ -224,6 +237,7 @@ namespace Lang
                     "less",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -237,6 +251,7 @@ namespace Lang
                     "more",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -250,6 +265,7 @@ namespace Lang
                     "equal",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarNumber first = (VarNumber)vars[0].Value;
@@ -263,6 +279,7 @@ namespace Lang
                     "get",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarList list = (VarList)vars[0].Value;
@@ -276,6 +293,7 @@ namespace Lang
                     "set",
                     new VarFunction
                     (
+                        3,
                         vars =>
                             {
                                 VarList list = (VarList)vars[0].Value;
@@ -293,6 +311,7 @@ namespace Lang
                     "append",
                     new VarFunction
                     (
+                        2,
                         vars =>
                             {
                                 VarList list = (VarList)vars[0].Value;

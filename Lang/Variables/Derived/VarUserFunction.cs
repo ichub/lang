@@ -15,8 +15,8 @@ namespace Lang
 
         private Script script;
 
-        private VarUserFunction(Func<Node[], Variable> function = null)
-            : base(function ?? (a => a[0].Value))
+        private VarUserFunction(int arity = 0, Func<Node[], Variable> function = null)
+            : base(arity, function ?? (a => a[0].Value))
         {
             this.LocalVariables = VariableStore.Empty;
         }
@@ -42,14 +42,19 @@ namespace Lang
 
             result.VariableNames = parts.Item2;
             result.FunctionLiteral = functionLiteral;
+            result.Arity = parts.Item2.Length;
 
             return result;
         }
 
         public override Variable Invoke(List<Node> parameters, Script script = null)
         {
-            this.script = script;
+            if (parameters.Count != this.Arity)
+            {
+                throw new Exception("Amount of parameters does not match function arity");
+            }
 
+            this.script = script;
             script.Variables.PushScope(this.LocalVariables);
 
             for (int i = 0; i < this.VariableNames.Length; i++)
