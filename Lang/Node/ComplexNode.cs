@@ -27,7 +27,7 @@ namespace Lang
             List<Node> parameters = this.Children.GetRange(1, this.Children.Count - 1);
             VarFunction function = (VarFunction)this.Children[0].Value;
 
-            this.value = function.Invoke(parameters);
+            this.value = function.Invoke(parameters, script);
 
             this.Evaluated = true;
 

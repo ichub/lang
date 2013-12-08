@@ -13,6 +13,8 @@ namespace Lang
         public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
 
+        private Script script;
+
         private VarUserFunction(Func<Node[], Variable> function = null)
             : base(function ?? (a => a[0].Value))
         {
@@ -23,12 +25,15 @@ namespace Lang
         {
             var parts = LangSpec.GetFunctionLiteralParts(functionLiteral);
 
+            VarUserFunction result = new VarUserFunction();
+
             Func<Node[], Variable> function = vars =>
                 {
+                    parts.Item1.Script = result.script;
                     return parts.Item1.Value;
                 };
 
-            VarUserFunction result = new VarUserFunction(function);
+            result.Value = function;
 
             for (int i = 0; i < parts.Item2.Length; i++)
             {
@@ -43,6 +48,8 @@ namespace Lang
 
         public override Variable Invoke(List<Node> parameters, Script script = null)
         {
+            this.script = script;
+
             script.Variables.PushScope(this.LocalVariables);
 
             for (int i = 0; i < this.VariableNames.Length; i++)
@@ -50,11 +57,11 @@ namespace Lang
                 script.Variables.SetVariable(this.VariableNames[i], parameters[i].Value);
             }
 
-            Variable value = this.Value.Invoke(null);
+            Variable result = this.Value.Invoke(null);
 
             script.Variables.PopScope();
 
-            return value;
+            return result;
         }
     }
 }

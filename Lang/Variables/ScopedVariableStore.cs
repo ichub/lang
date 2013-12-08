@@ -73,25 +73,20 @@ namespace Lang
 
             if (scope != VariableScope.Global) // local or all
             {
-                if (scope == VariableScope.All)
+                if (scope == VariableScope.All) // all
                 {
-                    if (this.scopes.Count > 0)
+                    if (this.scopes.Count > 0) // contains non-global variables
                     {
-                        if (this.scopes.Peek().ContainsVariable(name))
+                        if (this.scopes.Peek().ContainsVariable(name)) // if topmost non-global store contains the variable
                         {
                             this.scopes.Peek().SetVariable(name, value);
-                            return;
-                        }
-                        else
-                        {
-                            base.SetVariable(name, value);
                             return;
                         }
                     }
                 }
             }
 
-            base.SetVariable(name, value); // just global
+            base.SetVariable(name, value); // just global or all with no local variables
         }
     }
 }
