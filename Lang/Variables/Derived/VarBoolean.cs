@@ -8,7 +8,7 @@ namespace Lang
 {
     public class VarBoolean : Variable<bool>
     {
-        public VarBoolean(bool value) :
+        public VarBoolean(bool value = false) :
             base(value)
         {
             this.Type = VariableType.Boolean;

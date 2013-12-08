@@ -13,9 +13,9 @@ namespace Lang
 
         public string FunctionLiteral { get; private set; }
         public string[] VariableNames { get; private set; }
-        
-        private VarUserFunction(Func<Node[], Variable> function)
-            : base(function)
+
+        private VarUserFunction(Func<Node[], Variable> function = null)
+            : base(function ?? (a => a[0].Value))
         {
             this.LocalVariables = VariableStore.Empty;
         }

@@ -10,8 +10,8 @@ namespace Lang
     {
         public int Length { get { return this.Value.Count; } }
 
-        public VarList()
-            : base(new List<Variable>())
+        public VarList(List<Variable> list = null)
+            : base(list ?? new List<Variable>())
         {
             this.Type = VariableType.List;
         }

@@ -9,8 +9,8 @@ namespace Lang
 {
     public class VarFunction : Variable<Func<Node[], Variable>>
     {
-        public VarFunction(Func<Node[], Variable> value) :
-            base(value)
+        public VarFunction(Func<Node[], Variable> value = null) :
+            base(value ?? (a => a[0].Value))
         {
             this.Type = VariableType.Function;
         }

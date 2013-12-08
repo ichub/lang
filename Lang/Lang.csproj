@@ -47,6 +47,10 @@
     <Compile Include="Node\LiteralNode.cs" />
     <Compile Include="Node\VariableNode.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Token.cs" />
+    <Compile Include="Parser\TokenString.cs" />
+    <Compile Include="Parser\TokenType.cs" />
     <Compile Include="Script.cs" />
     <Compile Include="Variables\Derived\VarList.cs" />
     <Compile Include="Variables\ScopedVariableStore.cs" />

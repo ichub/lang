@@ -8,7 +8,7 @@ namespace Lang
 {
     public class VarNumber : Variable<double>
     {
-        public VarNumber(double value) : 
+        public VarNumber(double value = 0) : 
             base(value)
         {
             this.Type = VariableType.Number;

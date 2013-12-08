@@ -8,7 +8,7 @@ namespace Lang
 {
     class VarString : Variable<string>
     {
-        public VarString(string value)
+        public VarString(string value = "")
             : base(value)
         {
             this.Type = VariableType.String;
