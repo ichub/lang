@@ -9,13 +9,13 @@ namespace Lang
 {
     public static class LangSpec
     {
-        public const char ExpressionSeparator = ';';
-        public const char VariableSeparator = ',';
-        public const char FunctionVariableSeparator = ':';
-        public const char ExpressionOpen = '(';
-        public const char ExpressionClose = ')';
-        public const char FuncOpen = '[';
-        public const char FuncClose = ']';
+        public const string ExpressionSeparator = ";";
+        public const string VariableSeparator = ",";
+        public const string FunctionVariableSeparator = ":";
+        public const string ExpressionOpen = "(";
+        public const string ExpressionClose = ")";
+        public const string FuncOpen = "[";
+        public const string FuncClose = "]";
 
         public static readonly string FunctionLiteralPattern;
         public static readonly string NumberLiteralPattern;
@@ -24,13 +24,22 @@ namespace Lang
         public static readonly string StringLiteralPattern;
         public static readonly string ListLiteralPattern;
 
-        public static readonly Regex FunctionLiteral;
         public static readonly Regex NumberLiteral;
         public static readonly Regex BooleanLiteral;
         public static readonly Regex StringLiteral;
         public static readonly Regex Variable;
+
+        public static readonly Regex ExpressionSeparatorRegex;
+        public static readonly Regex VariableSeparatorRegex;
+        public static readonly Regex FunctionVariableSeparatorRegex;
+        public static readonly Regex ExpressionOpenRegex;
+        public static readonly Regex ExpressionCloseRegex;
+        public static readonly Regex FuncOpenRegex;
+        public static readonly Regex FuncCloseRegex;
+
         public static readonly Regex Whitespace;
         public static readonly Regex ListLiteral;
+        public static readonly Regex FunctionLiteral;
 
         static LangSpec()
         {
@@ -40,6 +49,14 @@ namespace Lang
             BooleanLiteralPattern = @"^(True)|(False)$";
             StringLiteralPattern = "^\"([a-z]|[A-Z])*\"$";
             ListLiteralPattern = "^{.*}$";
+
+            ExpressionSeparatorRegex = new Regex("^" + Regex.Escape(ExpressionSeparator) + "$");
+            VariableSeparatorRegex = new Regex("^" + Regex.Escape(VariableSeparator) + "$");
+            FunctionVariableSeparatorRegex = new Regex("^" + Regex.Escape(FunctionVariableSeparator) + "$");
+            ExpressionOpenRegex = new Regex("^" + Regex.Escape(ExpressionOpen) + "$");
+            ExpressionCloseRegex = new Regex("^" + Regex.Escape(ExpressionClose) + "$");
+            FuncOpenRegex = new Regex("^" + Regex.Escape(FuncOpen) + "$");
+            FuncCloseRegex = new Regex("^" + Regex.Escape(FuncClose) + "$");
 
             FunctionLiteral = new Regex(FunctionLiteralPattern);
             NumberLiteral = new Regex(NumberLiteralPattern);
@@ -68,7 +85,7 @@ namespace Lang
 
         public static bool IsFunctionInvocation(string input)
         {
-            return input[0] == ExpressionOpen && input[input.Length - 1] == ExpressionClose;
+            return input[0] == ExpressionOpen[0] && input[input.Length - 1] == ExpressionClose[0];
         }
 
         public static Variable GetLiteral(string input)
@@ -105,7 +122,7 @@ namespace Lang
         /// 
         /// { "1", "2", "(3, 4)" }
         /// </summary>
-        public static string[] DivideIntoParts(string expression, char divider = VariableSeparator, char parenOpen = ExpressionOpen, char parenClose = ExpressionClose)
+        public static string[] DivideIntoParts(string expression, string divider = VariableSeparator, string parenOpen = ExpressionOpen, string parenClose = ExpressionClose)
         {
             List<string> expressions = new List<string>();
 
@@ -116,7 +133,7 @@ namespace Lang
             {
                 char currentChar = expression[i];
 
-                if (currentChar == parenOpen)
+                if (currentChar.ToString() == parenOpen)
                 {
                     if (i == 0)
                     {
@@ -125,7 +142,7 @@ namespace Lang
 
                     parensCount++;
                 }
-                else if (currentChar == parenClose)
+                else if (currentChar.ToString() == parenClose)
                 {
                     if (i == expression.Length - 1)
                     {
@@ -137,7 +154,7 @@ namespace Lang
 
                 if (parensCount == 0)
                 {
-                    if (currentChar == divider)
+                    if (currentChar.ToString() == divider)
                     {
                         expressions.Add(accumulator);
                         accumulator = String.Empty;
@@ -155,13 +172,13 @@ namespace Lang
 
         public static string[] GetExpressions(string script)
         {
-            return script.Split(ExpressionSeparator).Where(a => a != String.Empty).ToArray();
+            return script.Split(ExpressionSeparator[0]).Where(a => a != String.Empty).ToArray();
         }
 
         public static Tuple<Expression, string[]> GetFunctionLiteralParts(string functionLiteral)
         {
-            string[] parts = functionLiteral.Split(new[] { FuncOpen, FuncClose }).Where(a => a != String.Empty).ToArray();
-            string[] names = parts[0].Split(FunctionVariableSeparator).Where(a => a != String.Empty).ToArray();
+            string[] parts = functionLiteral.Split(new[] { FuncOpen[0], FuncClose[0] }).Where(a => a != String.Empty).ToArray();
+            string[] names = parts[0].Split(FunctionVariableSeparator[0]).Where(a => a != String.Empty).ToArray();
 
             Expression expression = new Expression(parts[1]);
 

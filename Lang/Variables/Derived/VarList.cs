@@ -41,7 +41,7 @@ namespace Lang
 
         public static VarList Parse(string input)
         {
-            string[] parts = LangSpec.DivideIntoParts(input, '|', '{', '}');
+            string[] parts = LangSpec.DivideIntoParts(input, "|", "{", "}");
 
             VarList list = new VarList();
 

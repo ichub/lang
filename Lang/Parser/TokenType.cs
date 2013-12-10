@@ -8,5 +8,17 @@ namespace Lang
 {
     enum TokenType
     {
+        Unknown,
+        ExpressionSeparator,
+        VariableSeparator,
+        FunctionVariableSeparator,
+        ExpressionOpen,
+        ExpressionClose,
+        FuncOpen,
+        FuncClose,
+        Number,
+        Boolean,
+        String,
+        Variable,
     }
 }

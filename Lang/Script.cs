@@ -16,12 +16,17 @@ namespace Lang
 
         public Script(string script)
         {
+            Parser.Initialize();
+            
+            var a = Parser.ParseString(script);
+            a.Print();
+
             this.Variables = new ScopedVariableStore();
             this.script = LangSpec.StripWhitespace(script);
 
             string[] expressionLiterals = LangSpec.GetExpressions(this.script);
 
-            this.expressions = expressionLiterals.Select(lit => 
+            this.expressions = expressionLiterals.Select(lit =>
                 {
                     var exp = new Expression(lit);
                     exp.Script = this;

@@ -10,9 +10,9 @@ namespace Lang
     {
         private List<Token> tokens;
 
-        public TokenString(List<Token> tokens)
+        public TokenString(List<Token> tokens = null)
         {
-            this.tokens = tokens;
+            this.tokens = tokens ?? new List<Token>();
         }
 
         public static TokenString operator+(TokenString tokenString, Token token)
@@ -20,6 +20,26 @@ namespace Lang
             tokenString.tokens.Add(token);
 
             return tokenString;
+        }
+
+        public override string ToString()
+        {
+            string acc = "";
+
+            foreach (Token token in this.tokens)
+            {
+                acc += token.Value + " ";
+            }
+
+            return acc;
+        }
+
+        public void Print()
+        {
+            foreach (Token token in this.tokens)
+            {
+                Console.WriteLine(token.Type + " : " + token.Value);
+            }
         }
     }
 }
