@@ -22,6 +22,7 @@ namespace Lang
                 Tuple.Create(TokenType.ExpressionClose, LangSpec.ExpressionCloseRegex),
                 Tuple.Create(TokenType.FuncOpen, LangSpec.FuncOpenRegex),
                 Tuple.Create(TokenType.FuncClose, LangSpec.FuncCloseRegex),
+                Tuple.Create(TokenType.Variable, LangSpec.Variable),
                 Tuple.Create(TokenType.Number, LangSpec.NumberLiteral),
                 Tuple.Create(TokenType.Boolean, LangSpec.BooleanLiteral),
                 Tuple.Create(TokenType.String, LangSpec.StringLiteral),

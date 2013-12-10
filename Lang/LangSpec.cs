@@ -12,10 +12,14 @@ namespace Lang
         public const char ExpressionSeparator = ';';
         public const char VariableSeparator = ',';
         public const char FunctionVariableSeparator = ':';
+        public const char ListItemSeparator = '|';
         public const char ExpressionOpen = '(';
         public const char ExpressionClose = ')';
         public const char FuncOpen = '[';
         public const char FuncClose = ']';
+        public const char ListOpen = '{';
+        public const char ListClose = '}';
+
 
         public static readonly string FunctionLiteralPattern;
         public static readonly string NumberLiteralPattern;
@@ -43,29 +47,46 @@ namespace Lang
 
         static LangSpec()
         {
-            FunctionLiteralPattern = String.Format(@"^\{0}.*\{1}\{0}.*\{1}$", FuncOpen, FuncClose);
-            VariablePattern = @"^([a-z]|[A-Z])+$";
-            NumberLiteralPattern = @"^\-?[0-9]+(\.[0-9])*$";
-            BooleanLiteralPattern = @"^(True)|(False)$";
-            StringLiteralPattern = "^\"([a-z]|[A-Z])*\"$";
-            ListLiteralPattern = "^{.*}$";
+            FunctionLiteralPattern = String.Format(@"\{0}.*\{1}\{0}.*\{1}", FuncOpen, FuncClose);
+            VariablePattern = @"([a-z]|[A-Z])+";
+            NumberLiteralPattern = @"\-?[0-9]+(\.[0-9])*";
+            BooleanLiteralPattern = @"(True)|(False)";
+            StringLiteralPattern = "\"([a-z]|[A-Z])*\"";
+            ListLiteralPattern = "{.*}";
 
-            ExpressionSeparatorRegex = new Regex("^" + Regex.Escape(ExpressionSeparator.ToString()) + "$");
-            VariableSeparatorRegex = new Regex("^" + Regex.Escape(VariableSeparator.ToString()) + "$");
-            FunctionVariableSeparatorRegex = new Regex("^" + Regex.Escape(FunctionVariableSeparator.ToString()) + "$");
-            ExpressionOpenRegex = new Regex("^" + Regex.Escape(ExpressionOpen.ToString()) + "$");
-            ExpressionCloseRegex = new Regex("^" + Regex.Escape(ExpressionClose.ToString()) + "$");
-            FuncOpenRegex = new Regex("^" + Regex.Escape(FuncOpen.ToString()) + "$");
-            FuncCloseRegex = new Regex("^" + Regex.Escape(FuncClose.ToString()) + "$");
+            ExpressionSeparatorRegex = MakeRegex(ExpressionSeparator);
+            VariableSeparatorRegex = MakeRegex(VariableSeparator);
+            FunctionVariableSeparatorRegex = MakeRegex(FunctionVariableSeparator);
+            ExpressionOpenRegex = MakeRegex(ExpressionOpen);
+            ExpressionCloseRegex = MakeRegex(ExpressionClose);
+            FuncOpenRegex = MakeRegex(FuncOpen);
+            FuncCloseRegex = MakeRegex(FuncClose);
 
-            FunctionLiteral = new Regex(FunctionLiteralPattern);
-            NumberLiteral = new Regex(NumberLiteralPattern);
-            BooleanLiteral = new Regex(BooleanLiteralPattern);
-            StringLiteral = new Regex(StringLiteralPattern);
-            Variable = new Regex(VariablePattern);
-            ListLiteral = new Regex(ListLiteralPattern);
+            FunctionLiteral = MakeRegex(FunctionLiteralPattern);
+            NumberLiteral = MakeRegex(NumberLiteralPattern);
+            BooleanLiteral = MakeRegex(BooleanLiteralPattern);
+            StringLiteral = MakeRegex(StringLiteralPattern);
+            Variable = MakeRegex(VariablePattern);
+            ListLiteral = MakeRegex(ListLiteralPattern);
 
             Whitespace = new Regex(@"\s+|\\r|\\n");
+        }
+
+        public static Regex MakeRegex(char character, bool escape = true)
+        {
+            string pattern = character.ToString();
+
+            if (escape)
+            {
+                pattern = Regex.Escape(character.ToString());
+            }
+
+            return MakeRegex(pattern);
+        }
+
+        public static Regex MakeRegex(string pattern)
+        {
+            return new Regex("^" + pattern + "$");
         }
 
         public static string StripWhitespace(string input)
