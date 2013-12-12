@@ -13,8 +13,6 @@ namespace Lang
 
         public static void Initialize()
         {
-            // todo: make list characters be parsed
-
             tokenAssociations = new List<Tuple<TokenType, Regex>>()
             {
                 Tuple.Create(TokenType.ExpressionSeparator, LangSpec.ExpressionSeparatorRegex),
