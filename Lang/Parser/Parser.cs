@@ -13,20 +13,28 @@ namespace Lang
 
         public static void Initialize()
         {
+            // todo: make list characters be parsed
+
             tokenAssociations = new List<Tuple<TokenType, Regex>>()
             {
                 Tuple.Create(TokenType.ExpressionSeparator, LangSpec.ExpressionSeparatorRegex),
                 Tuple.Create(TokenType.VariableSeparator, LangSpec.VariableSeparatorRegex),
                 Tuple.Create(TokenType.FunctionVariableSeparator, LangSpec.FunctionVariableSeparatorRegex),
+                Tuple.Create(TokenType.ListItemSeparator, LangSpec.ListItemSeparatorRegex),
+
                 Tuple.Create(TokenType.ExpressionOpen, LangSpec.ExpressionOpenRegex),
                 Tuple.Create(TokenType.ExpressionClose, LangSpec.ExpressionCloseRegex),
+
                 Tuple.Create(TokenType.FuncOpen, LangSpec.FuncOpenRegex),
                 Tuple.Create(TokenType.FuncClose, LangSpec.FuncCloseRegex),
+
+                Tuple.Create(TokenType.ListOpen, LangSpec.ListOpenRegex),
+                Tuple.Create(TokenType.ListClose, LangSpec.ListCloseRegex),
+
                 Tuple.Create(TokenType.Variable, LangSpec.Variable),
                 Tuple.Create(TokenType.Number, LangSpec.NumberLiteral),
                 Tuple.Create(TokenType.Boolean, LangSpec.BooleanLiteral),
                 Tuple.Create(TokenType.String, LangSpec.StringLiteral),
-                Tuple.Create(TokenType.Variable, LangSpec.Variable),
             };
         }
 

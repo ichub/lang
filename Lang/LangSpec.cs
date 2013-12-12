@@ -36,10 +36,14 @@ namespace Lang
         public static readonly Regex ExpressionSeparatorRegex;
         public static readonly Regex VariableSeparatorRegex;
         public static readonly Regex FunctionVariableSeparatorRegex;
+        public static readonly Regex ListItemSeparatorRegex;
+
         public static readonly Regex ExpressionOpenRegex;
         public static readonly Regex ExpressionCloseRegex;
         public static readonly Regex FuncOpenRegex;
         public static readonly Regex FuncCloseRegex;
+        public static readonly Regex ListOpenRegex;
+        public static readonly Regex ListCloseRegex;
 
         public static readonly Regex Whitespace;
         public static readonly Regex ListLiteral;
@@ -57,10 +61,14 @@ namespace Lang
             ExpressionSeparatorRegex = MakeRegex(ExpressionSeparator);
             VariableSeparatorRegex = MakeRegex(VariableSeparator);
             FunctionVariableSeparatorRegex = MakeRegex(FunctionVariableSeparator);
+            ListItemSeparatorRegex = MakeRegex(ListItemSeparator);
+
             ExpressionOpenRegex = MakeRegex(ExpressionOpen);
             ExpressionCloseRegex = MakeRegex(ExpressionClose);
             FuncOpenRegex = MakeRegex(FuncOpen);
             FuncCloseRegex = MakeRegex(FuncClose);
+            ListOpenRegex = MakeRegex(ListOpen);
+            ListCloseRegex = MakeRegex(ListClose);
 
             FunctionLiteral = MakeRegex(FunctionLiteralPattern);
             NumberLiteral = MakeRegex(NumberLiteralPattern);

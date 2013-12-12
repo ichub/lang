@@ -1,1 +1,1 @@
-([num][(ifthen, (more, num, 1), (mul, num, (this, (add, num, -1))), 1)], 10);
+{1 | 2 | 3}
